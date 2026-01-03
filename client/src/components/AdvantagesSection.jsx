@@ -21,20 +21,30 @@ const AdvantagesSection = () => {
     {
       title: "TESTED BY EXPERTS",
       description: "Certified and meets high standards*"
+    },
+    {
+      title: "FAST ACTING",
+      description: "Provides quick relief and visible results within days of use"
     }
   ]
 
   return (
-    <Box as="section" py={16} bg="gray.50">
-      <Container maxW="1200px" px={{ base: 0, md: 6 }}>
+    <Box as="section" py={{ base: 12, md: 20 }} bg="sectionYellowGreen" position="relative" zIndex={5} mt={{ base: 0, md: -15 }}>
+      <Container maxW="1200px" px={{ base: 0, md: 6 }} mx="auto">
         <Heading size="xl" textAlign="center" mb={12} color="gray.800">
-          Advantages of Flekosteel for back and joints
+          Advantages of Goodsxyz for back and joints
         </Heading>
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8} px={{ base: 4, md: 0 }}>
+        <Box w="100%" display="flex" justifyContent="center" px={{ base: 4, md: 6, lg: 8 }}>
+          <SimpleGrid 
+            columns={{ base: 1, md: 2, lg: 3 }} 
+            spacing={{ base: 10, md: 16, lg: 24 }} 
+            w="100%"
+            maxW="1200px"
+          >
           {advantages.map((advantage, index) => (
             <Box
               key={index}
-              p={8}
+              p={{ base: 6, md: 8, lg: 10 }}
               bg="white"
               borderRadius="xl"
               boxShadow="lg"
@@ -44,8 +54,9 @@ const AdvantagesSection = () => {
                 boxShadow: '2xl'
               }}
               transition="all 0.3s"
+              minH={{ base: 'auto', md: '320px' }}
             >
-              <VStack spacing={4}>
+              <VStack spacing={5}>
                 <Box
                   w="80px"
                   h="80px"
@@ -56,19 +67,21 @@ const AdvantagesSection = () => {
                   alignItems="center"
                   justifyContent="center"
                   boxShadow="md"
+                  mb={2}
                 >
                   <Text fontSize="3xl" color="white">✓</Text>
                 </Box>
-                <Heading size="md" fontWeight="bold" color="gray.800">
+                <Heading size="md" fontWeight="bold" color="gray.800" px={2}>
                   {advantage.title}
                 </Heading>
-                <Text fontSize="md" color="gray.600" lineHeight="tall">
+                <Text fontSize="md" color="gray.600" lineHeight="tall" px={2}>
                   {advantage.description}
                 </Text>
               </VStack>
             </Box>
           ))}
-        </SimpleGrid>
+          </SimpleGrid>
+        </Box>
       </Container>
     </Box>
   )

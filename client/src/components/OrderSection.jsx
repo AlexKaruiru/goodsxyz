@@ -1,16 +1,63 @@
 import { useState } from 'react'
-import { Box, Container, Heading, SimpleGrid, VStack, Text, Input, Button, Flex, Badge, Spacer } from '@chakra-ui/react'
+import { Box, Container, Heading, VStack, Text, Input, Button, Flex, Spacer, Textarea, Badge } from '@chakra-ui/react'
+import { submitContactForm } from '../utils/contactService'
+import { toaster } from './ui/toaster'
 
 const OrderSection = () => {
   const [formData, setFormData] = useState({
     name: '',
-    phone: ''
+    phone: '',
+    email: '',
+    message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    // Handle form submission here
+    
+    // Validate: name is required, and at least phone or email must be provided
+    if (!formData.name || (!formData.phone && !formData.email)) {
+      toaster.create({
+        title: 'Validation Error',
+        description: 'Please provide your name and either phone or email',
+        type: 'error',
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      await submitContactForm({
+        name: formData.name,
+        phone: formData.phone || '',
+        email: formData.email || '',
+        message: formData.message || '',
+        source: 'contact-form'
+      })
+
+      toaster.create({
+        title: 'Form submitted successfully!',
+        description: 'Your message has been processed. We will contact you shortly.',
+        type: 'success',
+      })
+
+      // Reset form
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        message: ''
+      })
+    } catch (error) {
+      toaster.create({
+        title: 'Error sending message',
+        description: error.message || 'Please try again later.',
+        type: 'error',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e) => {
@@ -21,164 +68,118 @@ const OrderSection = () => {
   }
 
   return (
-    <Box as="section" py={16} bg="white">
-      <Container maxW="1200px" px={{ base: 0, md: 6 }}>
-        <VStack spacing={8} px={{ base: 4, md: 0 }}>
-          <Box textAlign="center" mb={4}>
-            <Badge bg="red.500" color="white" px={6} py={3} fontSize="lg" mb={6} borderRadius="full" boxShadow="md">
-              BEWARE OF RISKY IMITATIONS!
-            </Badge>
-            <Heading size="xl" mb={10} color="gray.800">
-              How to order Flekosteel for your backbone and joints
+    <Box as="section" py={{ base: 12, md: 20 }} pb={{ base: 12, md: 24 }} bg="sectionPeach" position="relative" zIndex={6} mt={{ base: 0, md: -30 }} id="contact">
+      <Container maxW="1200px" px={{ base: 0, md: 6 }} mx="auto">
+        <VStack spacing={8} px={{ base: 4, md: 0 }} w="100%" align="center">
+          <Box textAlign="center" mb={4} w="100%">
+            <Heading size="xl" mb={4} color="gray.800">
+              Contact Us
             </Heading>
+            <Text fontSize="lg" color="gray.600" mb={8}>
+              Have a question? Get in touch with us!
+            </Text>
           </Box>
 
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8} mb={12} w="100%">
-            <VStack spacing={4}>
-              <Box 
-                w="80px" 
-                h="80px" 
-                bg="brandBlue" 
-                borderRadius="full" 
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                boxShadow="lg"
-              >
-                <Text fontSize="2xl" color="white" fontWeight="bold">1</Text>
-              </Box>
-              <Text fontWeight="bold" textAlign="center" fontSize="lg">
-                Complete order form
-              </Text>
-            </VStack>
-            <VStack spacing={4}>
-              <Box 
-                w="80px" 
-                h="80px" 
-                bg="brandBlue" 
-                borderRadius="full"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                boxShadow="lg"
-              >
-                <Text fontSize="2xl" color="white" fontWeight="bold">2</Text>
-              </Box>
-              <Text fontWeight="bold" textAlign="center" fontSize="lg">
-                Choose shipping method
-              </Text>
-            </VStack>
-            <VStack spacing={4}>
-              <Box 
-                w="80px" 
-                h="80px" 
-                bg="brandBlue" 
-                borderRadius="full"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                boxShadow="lg"
-              >
-                <Text fontSize="2xl" color="white" fontWeight="bold">3</Text>
-              </Box>
-              <Text fontWeight="bold" textAlign="center" fontSize="lg">
-                Pay for product upon receipt
-              </Text>
-            </VStack>
-          </SimpleGrid>
-
-          <Flex direction={{ base: 'column', lg: 'row' }} gap={8} w="100%" maxW="1000px">
-            {/* Product Image Area */}
-            <Box flex="1" display={{ base: 'none', lg: 'flex' }} alignItems="center" justifyContent="center">
-              <Box w="300px" h="300px" bg="gray.100" borderRadius="xl" display="flex" alignItems="center" justifyContent="center">
-                <Text color="gray.400">Product Image</Text>
-              </Box>
-            </Box>
-
-            {/* Form Area */}
-            <Box flex="1" bg="gray.50" p={10} borderRadius="xl" boxShadow="lg">
-            <VStack spacing={4} mb={6}>
-              <Badge bg="brandOrange" color="white" px={4} py={2} fontSize="lg">
-                DISCOUNT <Text as="span" fontSize="xl">50%</Text>
-              </Badge>
-              <Text fontSize="sm" color="gray.600" mb={2}>
-                LIMITED OFFER WITH DISCOUNT
-              </Text>
-              <Flex align="center" justify="center" gap={4}>
-                <Text fontSize="3xl" fontWeight="bold" color="brandOrange">
-                  6500 KSh
-                </Text>
-                <Text fontSize="xl" color="gray.400" textDecoration="line-through">
-                  13000 KSh
-                </Text>
-              </Flex>
-            </VStack>
-
-            <form onSubmit={handleSubmit}>
-              <VStack spacing={4}>
-                <Box w="100%">
-                  <Text fontWeight="bold" mb={2}>NAME</Text>
-                  <Input
-                    name="name"
-                    type="text"
-                    placeholder="Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    bg="white"
-                  />
-                </Box>
-
-                <Spacer h={3} />
-
-                <Box w="100%">
-                  <Text fontWeight="bold" mb={2}>PHONE NUMBER</Text>
-                  <Flex gap={2}>
+          <Box w="100%" display="flex" justifyContent="center">
+            <Box w="100%" maxW="700px" bg="gray.50" p={{ base: 6, md: 10 }} borderRadius="xl" boxShadow="lg">
+              <form onSubmit={handleSubmit}>
+                <VStack spacing={4}>
+                  <Box w="100%">
+                    <Text fontWeight="bold" mb={2}>NAME *</Text>
                     <Input
-                      value="+254"
-                      disabled
-                      w="80px"
-                      bg="gray.200"
-                    />
-                    <Input
-                      name="phone"
-                      type="tel"
-                      placeholder="Phone No"
-                      value={formData.phone}
+                      name="name"
+                      type="text"
+                      placeholder="Your full name"
+                      value={formData.name}
                       onChange={handleChange}
                       required
                       bg="white"
-                      flex={1}
                     />
-                  </Flex>
-                </Box>
+                  </Box>
 
-                <Spacer h={3} />
+                  <Spacer h={3} />
 
-                <Button
-                  type="submit"
-                  bg="brandOrange"
-                  color="white"
-                  size="lg"
-                  w="100%"
-                  py={7}
-                  fontSize="xl"
-                  fontWeight="bold"
-                  borderRadius="full"
-                  boxShadow="xl"
-                  _hover={{ 
-                    bg: 'brandOrange', 
-                    transform: 'translateY(-2px)',
-                    boxShadow: '2xl'
-                  }}
-                  transition="all 0.2s"
-                >
-                  ORDER
-                </Button>
-              </VStack>
-            </form>
+                  <Box w="100%">
+                    <Text fontWeight="bold" mb={2}>PHONE NUMBER</Text>
+                    <Flex gap={2}>
+                      <Input
+                        value="+254"
+                        disabled
+                        w="80px"
+                        bg="gray.200"
+                      />
+                      <Input
+                        name="phone"
+                        type="tel"
+                        placeholder="Phone number"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        bg="white"
+                        flex={1}
+                      />
+                    </Flex>
+                  </Box>
+
+                  <Spacer h={3} />
+
+                  <Box w="100%">
+                    <Text fontWeight="bold" mb={2}>EMAIL</Text>
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder="Email address"
+                      value={formData.email}
+                      onChange={handleChange}
+                      bg="white"
+                    />
+                  </Box>
+
+                  <Text fontSize="xs" color="gray.500" mt={-2} mb={2}>
+                    * Required. At least phone or email must be provided.
+                  </Text>
+
+                  <Spacer h={3} />
+
+                  <Box w="100%">
+                    <Text fontWeight="bold" mb={2}>MESSAGE</Text>
+                    <Textarea
+                      name="message"
+                      placeholder="Your message or inquiry..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      bg="white"
+                      rows={6}
+                    />
+                  </Box>
+
+                  <Spacer h={3} />
+
+                  <Button
+                    type="submit"
+                    bg="brandOrange"
+                    color="white"
+                    size="lg"
+                    w="100%"
+                    py={7}
+                    fontSize="xl"
+                    fontWeight="bold"
+                    borderRadius="full"
+                    boxShadow="xl"
+                    isLoading={isSubmitting}
+                    loadingText="Submitting..."
+                    _hover={{ 
+                      bg: 'brandOrange', 
+                      transform: 'translateY(-2px)',
+                      boxShadow: '2xl'
+                    }}
+                    transition="all 0.2s"
+                  >
+                    SEND MESSAGE
+                  </Button>
+                </VStack>
+              </form>
             </Box>
-          </Flex>
+          </Box>
         </VStack>
       </Container>
     </Box>

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "product-a",
+    "name": "Product A",
+    "description": "Product A is an effective solution for osteochondrosis, osteoarthritis and injuries. It quickly eliminates pain, reduces muscle spasm and inflammation, and promotes regeneration of articular cartilage.",
+    "price": 6500,
+    "originalPrice": 13000,
+    "discount": 50,
+    "image": "product1.webp",
+    "benefits": [
+      "Relieves pain",
+      "Stimulates cartilage regeneration",
+      "Alleviates muscle hypertension",
+      "Lessens swelling",
+      "Eliminates inflammations",
+      "Improves joint mobility",
+      "Reduces stiffness",
+      "Promotes healing"
+    ],
+    "ingredients": [
+      "Natural herbal extracts",
+      "Anti-inflammatory compounds",
+      "Cartilage-supporting nutrients",
+      "Pain-relieving agents"
+    ],
+    "category": "pain-relief",
+    "inStock": true
+  },
+  {
+    "id": "product-b",
+    "name": "Product B",
+    "description": "Product B provides comprehensive relief for joint and back pain. Its unique formula targets the root causes of discomfort while supporting long-term joint health.",
+    "price": 6500,
+    "originalPrice": 13000,
+    "discount": 50,
+    "image": "product2.webp",
+    "benefits": [
+      "Relieves pain",
+      "Stimulates cartilage regeneration",
+      "Alleviates muscle hypertension",
+      "Lessens swelling",
+      "Eliminates inflammations",
+      "Enhances flexibility",
+      "Strengthens joints",
+      "Prevents further damage"
+    ],
+    "ingredients": [
+      "Natural herbal extracts",
+      "Anti-inflammatory compounds",
+      "Cartilage-supporting nutrients",
+      "Pain-relieving agents"
+    ],
+    "category": "pain-relief",
+    "inStock": true
+  }
+]
+
