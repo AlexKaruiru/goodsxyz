@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react'
 import { Steps } from '@chakra-ui/react'
 import { submitOrder } from '../utils/orderService'
-import { toaster } from './ui/toaster'
 
 const MultiStepOrder = ({ product }) => {
   const [currentStep, setCurrentStep] = useState(0)
@@ -42,21 +41,13 @@ const MultiStepOrder = ({ product }) => {
     // Validate current step
     if (currentStep === 1) {
       if (!formData.name || (!formData.phone && !formData.email)) {
-        toaster.create({
-          title: 'Validation Error',
-          description: 'Please provide at least your name and either phone or email',
-          type: 'error',
-        })
+        alert('Validation Error: Please provide at least your name and either phone or email')
         return
       }
     }
     if (currentStep === 2) {
       if (!formData.location) {
-        toaster.create({
-          title: 'Validation Error',
-          description: 'Please provide your delivery location',
-          type: 'error',
-        })
+        alert('Validation Error: Please provide your delivery location')
         return
       }
     }
@@ -87,11 +78,7 @@ const MultiStepOrder = ({ product }) => {
         price: product.price
       })
 
-      toaster.create({
-        title: 'Order submitted successfully!',
-        description: 'Your order has been processed. We will contact you shortly to confirm.',
-        type: 'success',
-      })
+      alert('Order submitted successfully! Your order has been processed. We will contact you shortly to confirm.')
 
       // Reset form
       setFormData({
@@ -103,11 +90,7 @@ const MultiStepOrder = ({ product }) => {
       })
       setCurrentStep(0)
     } catch (error) {
-      toaster.create({
-        title: 'Error submitting order',
-        description: error.message || 'Please try again later.',
-        type: 'error',
-      })
+      alert(`Error submitting order: ${error.message || 'Please try again later.'}`)
     } finally {
       setIsSubmitting(false)
     }

@@ -3,7 +3,6 @@ import { Box, Container, Heading, VStack, Text, Input, Button, Flex, Spacer, Tex
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { submitOrderForm } from '../utils/orderService'
-import { toaster } from './ui/toaster'
 
 const OrderSection = () => {
   const [formData, setFormData] = useState({
@@ -18,12 +17,7 @@ const OrderSection = () => {
     
     // Validate: all fields are required
     if (!formData.name || !formData.phone || !formData.deliveryAddress) {
-      createToast({
-        title: 'Validation Error',
-        description: 'Please fill in all fields: Name, Phone Number, and Delivery Address',
-        type: 'error',
-        duration: 5000,
-      })
+      alert('Please fill in all fields: Name, Phone Number, and Delivery Address')
       return
     }
 
@@ -37,12 +31,7 @@ const OrderSection = () => {
         source: 'order-form'
       })
 
-      createToast({
-        title: 'Order submitted successfully!',
-        description: 'We have received your order. We will contact you shortly to confirm.',
-        type: 'success',
-        duration: 5000,
-      })
+      alert('Order submitted successfully! We have received your order. We will contact you shortly to confirm.')
 
       // Reset form
       setFormData({
@@ -51,12 +40,15 @@ const OrderSection = () => {
         deliveryAddress: ''
       })
     } catch (error) {
-      createToast({
-        title: 'Error submitting order',
-        description: error.message || 'Please try again later.',
-        type: 'error',
-        duration: 5000,
-      })
+      // Handle EmailJS specific error
+      const errorMessage = error.text || error.message || 'Please try again later.'
+      const isRecipientError = errorMessage.includes('recipients address is empty') || errorMessage.includes('recipient')
+      
+      const alertMessage = isRecipientError 
+        ? 'Email Configuration Error: Please configure recipient emails in your EmailJS template settings (To Email field).'
+        : `Error submitting order: ${errorMessage}`
+      
+      alert(alertMessage)
     } finally {
       setIsSubmitting(false)
     }

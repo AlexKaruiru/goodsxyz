@@ -3,7 +3,6 @@ import { Dialog, Box, Text, Input, Button, Textarea, Field, CloseButton, Portal,
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { submitOrder } from '../utils/orderService'
-import { toaster, createToast } from './ui/toaster'
 
 const QuickOrderModal = ({ isOpen, onClose, product }) => {
   const [formData, setFormData] = useState({
@@ -18,12 +17,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
     
     // Validate: all fields are required
     if (!formData.name || !formData.phone || !formData.deliveryAddress) {
-      createToast({
-        title: 'Validation Error',
-        description: 'Please fill in all fields: Name, Phone Number, and Delivery Address',
-        type: 'error',
-        duration: 5000,
-      })
+      alert('Please fill in all fields: Name, Phone Number, and Delivery Address')
       return
     }
 
@@ -40,12 +34,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
         price: product?.price
       })
 
-      createToast({
-        title: 'Order submitted successfully!',
-        description: 'We have received your order. We will contact you shortly to confirm.',
-        type: 'success',
-        duration: 5000,
-      })
+      alert('Order submitted successfully! We have received your order. We will contact you shortly to confirm.')
 
       // Reset form and close modal
       setFormData({
@@ -59,14 +48,11 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
       const errorMessage = error.text || error.message || 'Please try again later.'
       const isRecipientError = errorMessage.includes('recipients address is empty')
       
-      createToast({
-        title: isRecipientError ? 'Email Configuration Error' : 'Error submitting order',
-        description: isRecipientError 
-          ? 'Please configure recipient emails in your EmailJS template settings.'
-          : errorMessage,
-        type: 'error',
-        duration: 7000,
-      })
+      const alertMessage = isRecipientError 
+        ? 'Email Configuration Error: Please configure recipient emails in your EmailJS template settings.'
+        : `Error submitting order: ${errorMessage}`
+      
+      alert(alertMessage)
     } finally {
       setIsSubmitting(false)
     }
