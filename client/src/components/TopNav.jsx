@@ -1,19 +1,38 @@
-import { Box, HStack, Input, IconButton, Flex, Image } from '@chakra-ui/react'
+import { Box, HStack, Input, Flex, Image } from '@chakra-ui/react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useState } from 'react'
-import { FiSearch } from 'react-icons/fi'
+import { useState, useEffect } from 'react'
 import logoImage from '../images/logo.webp'
+import { getAllProducts, getProductSlug } from '../utils/productsService'
 
 const TopNav = ({ onSearch }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const [searchQuery, setSearchQuery] = useState('')
+  const [products, setProducts] = useState([])
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const fetchedProducts = await getAllProducts()
+        setProducts(fetchedProducts)
+      } catch (error) {
+        console.error('Error fetching products for navigation:', error)
+      }
+    }
+    fetchProducts()
+  }, [])
+
+  // Build menu items dynamically
   const menuItems = [
-    { label: 'Home', href: '#home', isHome: true },
-    { label: 'Products', href: '#products', isHome: false },
-    { label: 'About', href: '#about', isHome: false },
-    { label: 'Contact', href: '#contact', isHome: false },
+    { label: 'Home', href: '#home', isHome: true, isProduct: false },
+    ...products.map(product => ({
+      label: product.name,
+      href: `/product/${getProductSlug(product)}`,
+      isHome: false,
+      isProduct: true,
+      productId: product.id
+    })),
+    { label: 'Order', href: '#order', isHome: false, isProduct: false },
   ]
 
   const handleNavClick = (e, item) => {
@@ -47,7 +66,11 @@ const TopNav = ({ onSearch }) => {
           })
         }
       }
+    } else if (item.isProduct) {
+      // Navigate to product page
+      navigate(item.href)
     } else {
+      // Regular anchor link (like #order)
       if (location.pathname !== '/') {
         navigate('/')
         // Wait for navigation, then scroll
@@ -78,9 +101,9 @@ const TopNav = ({ onSearch }) => {
     }
   }
 
-  const handleSearch = (e) => {
-    e.preventDefault()
-    if (onSearch && searchQuery.trim()) {
+  // Real-time search as user types
+  useEffect(() => {
+    if (onSearch) {
       // Navigate to home if not already there
       if (location.pathname !== '/') {
         navigate('/')
@@ -91,7 +114,7 @@ const TopNav = ({ onSearch }) => {
         onSearch(searchQuery.trim())
       }
     }
-  }
+  }, [searchQuery, onSearch, location.pathname, navigate])
 
   return (
     <Box
@@ -144,33 +167,21 @@ const TopNav = ({ onSearch }) => {
           </HStack>
 
           {/* Search Bar */}
-          <Box flexShrink={0} minW="200px">
-            <form onSubmit={handleSearch}>
-              <Flex gap={2}>
-                <Input
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  size="md"
-                  bg="gray.50"
-                  border="1px solid"
-                  borderColor="gray.300"
-                  _focus={{
-                    borderColor: 'brandOrange',
-                    boxShadow: '0 0 0 1px brandOrange'
-                  }}
-                />
-                <IconButton
-                  type="submit"
-                  icon={<FiSearch />}
-                  aria-label="Search"
-                  bg="brandOrange"
-                  color="white"
-                  _hover={{ bg: 'brandOrange', opacity: 0.9 }}
-                  size="md"
-                />
-              </Flex>
-            </form>
+          <Box flexShrink={0} minW="200px" px={2}>
+            <Input
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              size="md"
+              bg="gray.50"
+              border="1px solid"
+              borderColor="gray.300"
+              px={4}
+              _focus={{
+                borderColor: 'brandOrange',
+                boxShadow: '0 0 0 1px brandOrange'
+              }}
+            />
           </Box>
         </Flex>
       </Box>

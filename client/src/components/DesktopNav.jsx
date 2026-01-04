@@ -9,7 +9,7 @@ const DesktopNav = () => {
     { label: 'Home', href: '#home', isHome: true },
     { label: 'Products', href: '#products', isHome: false },
     { label: 'About', href: '#about', isHome: false },
-    { label: 'Contact', href: '#contact', isHome: false },
+    { label: 'Order', href: '#order', isHome: false },
   ]
 
   const handleNavClick = (e, item) => {

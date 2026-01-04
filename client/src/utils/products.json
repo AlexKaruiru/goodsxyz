@@ -1,12 +1,12 @@
 [
   {
     "id": "product-a",
-    "name": "Product A",
-    "description": "Product A is an effective solution for osteochondrosis, osteoarthritis and injuries. It quickly eliminates pain, reduces muscle spasm and inflammation, and promotes regeneration of articular cartilage.",
-    "price": 6500,
-    "originalPrice": 13000,
+    "name": "Wormwood",
+    "description": "Wormwood is an effective solution for osteochondrosis, osteoarthritis and injuries. It quickly eliminates pain, reduces muscle spasm and inflammation, and promotes regeneration of articular cartilage.",
+    "price": 5190,
+    "originalPrice": 10380,
     "discount": 50,
-    "image": "product1.webp",
+    "image": "wormwood.jpg",
     "benefits": [
       "Relieves pain",
       "Stimulates cartilage regeneration",
@@ -28,12 +28,12 @@
   },
   {
     "id": "product-b",
-    "name": "Product B",
-    "description": "Product B provides comprehensive relief for joint and back pain. Its unique formula targets the root causes of discomfort while supporting long-term joint health.",
-    "price": 6500,
-    "originalPrice": 13000,
+    "name": "Biotin",
+    "description": "Biotin provides comprehensive relief for joint and back pain. Its unique formula targets the root causes of discomfort while supporting long-term joint health.",
+    "price": 5190,
+    "originalPrice": 10380,
     "discount": 50,
-    "image": "product2.webp",
+    "image": "biotin.jpg",
     "benefits": [
       "Relieves pain",
       "Stimulates cartilage regeneration",

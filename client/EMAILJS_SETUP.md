@@ -1,142 +1,78 @@
-# EmailJS Setup Guide
+# EmailJS Setup Instructions
 
-## Why EmailJS?
-
-EmailJS allows you to send emails directly from the frontend without a backend server. When configured, emails are automatically sent to all 3 recipients when forms are submitted.
+The application now uses EmailJS to send emails directly from the frontend without requiring a backend server.
 
 ## Setup Steps
 
-### 1. Sign Up for EmailJS
+1. **Sign up for EmailJS**
+   - Go to https://www.emailjs.com/
+   - Create a free account
 
-1. Go to https://www.emailjs.com/
-2. Click "Sign Up" (free account available)
-3. Verify your email address
+2. **Create an Email Service**
+   - Go to "Email Services" in the dashboard
+   - Click "Add New Service"
+   - Choose "Gmail" as your service provider
+   - Connect your Gmail account: `alexndegwa49@gmail.com`
+   - Note down the **Service ID** (e.g., `service_xxxxx`)
 
-### 2. Add Email Service
+3. **Create an Email Template**
+   - Go to "Email Templates" in the dashboard
+   - Click "Create New Template"
+   - Use the following template variables:
+     - `{{from_name}}` - Sender name
+     - `{{to_email}}` - Recipient emails
+     - `{{customer_name}}` - Customer's name
+     - `{{customer_phone}}` - Customer's phone number
+     - `{{delivery_address}}` - Delivery address
+     - `{{product_name}}` - Product name (for product orders)
+     - `{{product_price}}` - Product price (for product orders)
+     - `{{message}}` - Full message content
+     - `{{subject}}` - Email subject
+   
+   Example template:
+   ```
+   Subject: {{subject}}
+   
+   {{message}}
+   ```
+   - Set "To Email" to: `wands.express@gmail.com,jwandera35@gmail.com`
+   - Set "From Name" to: `alexndegwa49@gmail.com`
+   - Note down the **Template ID** (e.g., `template_xxxxx`)
 
-1. Go to **Email Services** in the dashboard
-2. Click **Add New Service**
-3. Choose your email provider (Gmail recommended)
-4. Follow the setup instructions
-5. **Copy the Service ID** (you'll need this)
+4. **Get your Public Key**
+   - Go to "Account" → "General"
+   - Find your **Public Key** (e.g., `xxxxxxxxxxxxx`)
 
-### 3. Create Email Template
+5. **Configure Environment Variables**
+   - Create a `.env` file in the `client` directory
+   - Add the following:
+   ```
+   VITE_EMAILJS_SERVICE_ID=your_service_id_here
+   VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
+   VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
+   ```
+   - Replace the placeholder values with your actual IDs and key
 
-1. Go to **Email Templates** in the dashboard
-2. Click **Create New Template**
-3. Use this template structure:
+6. **Restart the Development Server**
+   - Stop your current dev server (Ctrl+C)
+   - Run `npm run dev` again to load the new environment variables
 
-**Template Name:** Contact Form Template
+## Email Configuration
 
-**Subject:**
-```
-📧 New Contact Form - {{from_name}} ({{from_phone}})
-```
+The emails will be sent:
+- **From:** alexndegwa49@gmail.com (configured in EmailJS service)
+- **To:** wands.express@gmail.com, jwandera35@gmail.com (configured in the template)
 
-**Content (HTML):**
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: linear-gradient(135deg, #015CAF 0%, #FF6B35 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-    .content { background: #f9f9f9; padding: 20px; border-radius: 0 0 8px 8px; }
-    .section { background: white; padding: 15px; margin: 15px 0; border-radius: 5px; border-left: 4px solid #015CAF; }
-    h2 { margin-top: 0; }
-    .info-row { margin: 8px 0; }
-    .label { font-weight: bold; color: #555; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h2 style="margin: 0;">📧 New Contact Form Submission</h2>
-      <p style="margin: 5px 0 0 0; opacity: 0.9;">{{date}}</p>
-    </div>
-    <div class="content">
-      <div class="section">
-        <h3 style="color: #015CAF; margin-top: 0;">Contact Information</h3>
-        <div class="info-row">
-          <span class="label">Name:</span> {{from_name}}
-        </div>
-        <div class="info-row">
-          <span class="label">Phone:</span> {{from_phone}}
-        </div>
-        <div class="info-row">
-          <span class="label">Email:</span> {{from_email}}
-        </div>
-        <div class="info-row">
-          <span class="label">Message:</span> {{message}}
-        </div>
-        <div class="info-row">
-          <span class="label">Source:</span> {{source}}
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-```
+## Testing
 
-4. **Copy the Template ID** (you'll need this)
-
-### 4. Get Public Key
-
-1. Go to **Account** → **General**
-2. Find your **Public Key**
-3. **Copy the Public Key**
-
-### 5. Configure in Your Project
-
-1. Create a `.env` file in the `client` directory (if it doesn't exist)
-2. Add these variables:
-
-```env
-VITE_EMAILJS_SERVICE_ID=your_service_id_here
-VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
-VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
-```
-
-3. **Restart your Vite dev server** for the environment variables to take effect
-
-### 6. Test
-
-1. Submit the contact form
-2. Check all 3 email inboxes - you should receive the email automatically!
-
-## For Order Form
-
-You'll need a second template for orders. Follow the same steps but use this template:
-
-**Subject:**
-```
-🛒 New Order: {{product_name}} - {{from_name}} ({{from_phone}})
-```
-
-**Content:** Similar structure but include:
-- `{{from_name}}`
-- `{{from_phone}}`
-- `{{from_email}}`
-- `{{location}}`
-- `{{address}}`
-- `{{product_id}}`
-- `{{product_name}}`
-- `{{product_price}}`
-
-Then update `client/src/utils/config.js` to include a second template ID for orders, or use the same template with conditional content.
-
-## Free Tier Limits
-
-- 200 emails per month (free tier)
-- Perfect for testing and small projects
-- Upgrade available if needed
+After setup, test the email functionality by:
+1. Filling out the order form on the website
+2. Submitting the form
+3. Checking the recipient email inboxes for the order notification
 
 ## Troubleshooting
 
-- **Emails not sending?** Check that all environment variables are set correctly
-- **Template not working?** Make sure variable names match exactly (case-sensitive)
-- **Service not connected?** Verify your email service is properly configured in EmailJS dashboard
-
+- If emails aren't sending, check the browser console for error messages
+- Verify all environment variables are set correctly
+- Ensure the EmailJS service is connected to your Gmail account
+- Check that the template variables match the ones used in the code

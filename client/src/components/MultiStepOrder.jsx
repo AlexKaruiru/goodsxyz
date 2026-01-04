@@ -10,7 +10,7 @@ import {
   Textarea
 } from '@chakra-ui/react'
 import { Steps } from '@chakra-ui/react'
-import { submitOrder } from '../utils/contactService'
+import { submitOrder } from '../utils/orderService'
 import { toaster } from './ui/toaster'
 
 const MultiStepOrder = ({ product }) => {
@@ -126,7 +126,7 @@ const MultiStepOrder = ({ product }) => {
               <Text color="gray.600" mb={3}>{product.description}</Text>
               <Flex align="center" gap={4}>
                 <Text fontSize="2xl" fontWeight="bold" color="brandOrange">
-                  {product.price.toLocaleString()} KSh
+                  {product.price.toLocaleString()} KES
                 </Text>
                 {product.originalPrice && product.originalPrice !== product.price && (
                   <Text fontSize="lg" color="gray.400" textDecoration="line-through">

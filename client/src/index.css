@@ -24,5 +24,68 @@ html, body {
   padding: 0;
 }
 
+/* Ensure Chakra UI v3 toasts appear above modals and fixed header */
+/* Chakra UI v3 toaster uses data-part attributes */
+[data-part="toast-group"],
+[data-scope="toast"][data-part="toast-group"] {
+  z-index: 10010 !important;
+  position: fixed !important;
+  margin-top: 80px !important; /* Account for fixed header */
+}
+
+[data-part="toast"],
+[data-scope="toast"][data-part="toast"] {
+  z-index: 10010 !important;
+  position: relative !important;
+}
+
+/* Target toast container */
+[data-part="toast-group"] > * {
+  z-index: 10010 !important;
+}
+
+/* Ensure Dialog modals appear above fixed header */
+[data-part="backdrop"],
+[data-scope="dialog"][data-part="backdrop"] {
+  z-index: 10001 !important;
+}
+
+[data-part="positioner"],
+[data-scope="dialog"][data-part="positioner"] {
+  z-index: 10002 !important;
+}
+
+[data-part="content"],
+[data-scope="dialog"][data-part="content"] {
+  z-index: 10002 !important;
+}
+
+/* Phone Input Styling */
+.phone-input-wrapper .react-tel-input {
+  width: 100% !important;
+}
+
+.phone-input-wrapper .form-control {
+  width: 100% !important;
+  height: 40px !important;
+  font-size: 16px !important;
+  border-radius: 6px !important;
+  border: 1px solid #CBD5E0 !important;
+  background-color: white !important;
+  padding-left: 60px !important;
+}
+
+.phone-input-wrapper .form-control:focus {
+  border-color: #FF6B35 !important;
+  box-shadow: 0 0 0 1px #FF6B35 !important;
+  outline: none !important;
+}
+
+.phone-input-wrapper .flag-dropdown {
+  border-radius: 6px 0 0 6px !important;
+  border-right: 1px solid #CBD5E0 !important;
+  background-color: #EDF2F7 !important;
+}
+
 
 

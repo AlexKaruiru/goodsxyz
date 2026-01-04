@@ -6,10 +6,10 @@ import ProductDetail from './pages/ProductDetail'
 function App() {
   return (
     <Router>
-      <Toaster position="top-right" />
+      <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/product/:productId" element={<ProductDetail />} />
+        <Route path="/product/:productName" element={<ProductDetail />} />
       </Routes>
     </Router>
   )

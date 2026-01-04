@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { ChakraProvider, createSystem, defaultConfig } from '@chakra-ui/react'
 import './index.css'
 import App from './App.jsx'
+import { initEmailJS } from './utils/orderService'
 
 const customTheme = {
   theme: {
@@ -31,6 +32,9 @@ const customTheme = {
 }
 
 const system = createSystem(defaultConfig, customTheme)
+
+// Initialize EmailJS
+initEmailJS()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

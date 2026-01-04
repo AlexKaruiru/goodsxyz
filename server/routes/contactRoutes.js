@@ -21,23 +21,16 @@ const getProductDetails = (productId) => {
   }
 }
 
-// Contact form submission
+// Contact form submission (for simplified order form)
 router.post('/contact', async (req, res) => {
   try {
-    const { name, phone, email, message, source } = req.body
+    const { name, phone, deliveryAddress, source } = req.body
 
-    // Validate: name is required, and at least phone or email must be provided
-    if (!name) {
+    // Validate: name, phone, and deliveryAddress are required
+    if (!name || !phone || !deliveryAddress) {
       return res.status(400).json({
         success: false,
-        message: 'Name is required'
-      })
-    }
-
-    if (!phone && !email) {
-      return res.status(400).json({
-        success: false,
-        message: 'At least phone or email must be provided'
+        message: 'Name, phone, and delivery address are required'
       })
     }
 
@@ -45,20 +38,19 @@ router.post('/contact', async (req, res) => {
     await sendContactEmail({
       name,
       phone: phone || '',
-      email: email || '',
-      message: message || '',
-      source: source || 'contact-form'
+      deliveryAddress: deliveryAddress || '',
+      source: source || 'order-form'
     })
 
     res.json({
       success: true,
-      message: 'Contact form submitted successfully'
+      message: 'Order submitted successfully'
     })
   } catch (error) {
     console.error('Error submitting contact form:', error)
     res.status(500).json({
       success: false,
-      message: 'Failed to submit contact form. Please try again later.'
+      message: 'Failed to submit order. Please try again later.'
     })
   }
 })
@@ -66,13 +58,13 @@ router.post('/contact', async (req, res) => {
 // Order form submission
 router.post('/orders', async (req, res) => {
   try {
-    const { name, phone, productId, productName, price, email, address } = req.body
+    const { name, phone, productId, productName, price, email, address, location, deliveryAddress } = req.body
 
-    // Validate required fields
-    if (!name || !phone) {
+    // Validate required fields - for simplified order form, we need name, phone, and deliveryAddress
+    if (!name || !phone || (!deliveryAddress && !location)) {
       return res.status(400).json({
         success: false,
-        message: 'Name and phone are required'
+        message: 'Name, phone, and delivery address are required'
       })
     }
 
@@ -82,13 +74,16 @@ router.post('/orders', async (req, res) => {
       productDetails = getProductDetails(productId)
     }
 
+    // Use deliveryAddress if provided, otherwise use location
+    const finalAddress = deliveryAddress || location || address || 'Not provided'
+
     // Send email with full product information
     await sendOrderEmail({
       name,
       phone: phone || '',
       email: email || 'Not provided',
-      location: req.body.location || 'Not provided',
-      address: address || 'Not provided',
+      location: location || finalAddress,
+      address: finalAddress,
       productId: productId || 'N/A',
       productName: productName || productDetails?.name || 'N/A',
       productDescription: productDetails?.description || 'N/A',

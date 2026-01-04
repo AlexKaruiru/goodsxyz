@@ -1,18 +1,38 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Box, IconButton, VStack, Drawer } from '@chakra-ui/react'
 import { GiHamburgerMenu } from 'react-icons/gi'
+import { getAllProducts, getProductSlug } from '../utils/productsService'
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [products, setProducts] = useState([])
   const navigate = useNavigate()
   const location = useLocation()
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const fetchedProducts = await getAllProducts()
+        setProducts(fetchedProducts)
+      } catch (error) {
+        console.error('Error fetching products for navigation:', error)
+      }
+    }
+    fetchProducts()
+  }, [])
+
+  // Build menu items dynamically
   const menuItems = [
-    { label: 'Home', href: '#home', isHome: true },
-    { label: 'Products', href: '#products', isHome: false },
-    { label: 'About', href: '#about', isHome: false },
-    { label: 'Contact', href: '#contact', isHome: false },
+    { label: 'Home', href: '#home', isHome: true, isProduct: false },
+    ...products.map(product => ({
+      label: product.name,
+      href: `/product/${getProductSlug(product)}`,
+      isHome: false,
+      isProduct: true,
+      productId: product.id
+    })),
+    { label: 'Order', href: '#order', isHome: false, isProduct: false },
   ]
 
   const handleNavClick = (e, item) => {
@@ -47,7 +67,11 @@ const MobileNav = () => {
           })
         }
       }
+    } else if (item.isProduct) {
+      // Navigate to product page
+      navigate(item.href)
     } else {
+      // Regular anchor link (like #order)
       if (location.pathname !== '/') {
         navigate('/')
         // Wait for navigation, then scroll
@@ -80,17 +104,23 @@ const MobileNav = () => {
 
   return (
     <>
-      <Box display={{ base: 'block', md: 'none' }} position="fixed" top={4} right={4} zIndex={10000}>
+      <Box 
+        display={{ base: 'block', md: 'none' }} 
+        position="fixed" 
+        top={4} 
+        right={4} 
+        zIndex={10000}
+      >
         <IconButton
           icon={<GiHamburgerMenu />}
           onClick={() => setIsOpen(true)}
           aria-label="Toggle menu"
-          bg="white"
+          bg="transparent"
           color="gray.800"
           size="lg"
           borderRadius="md"
-          boxShadow="lg"
-          _hover={{ bg: 'gray.100' }}
+          _hover={{ bg: 'rgba(0, 0, 0, 0.05)' }}
+          _active={{ bg: 'rgba(0, 0, 0, 0.1)' }}
         />
       </Box>
 
@@ -104,7 +134,7 @@ const MobileNav = () => {
               </Box>
             </Drawer.Header>
             <Drawer.Body>
-              <VStack spacing={4} align="stretch" mt={4}>
+              <VStack spacing={4} align="stretch" mt="4">
                 {menuItems.map((item, index) => (
                   <Box
                     key={index}

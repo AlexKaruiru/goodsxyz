@@ -3,9 +3,6 @@ import { Box } from '@chakra-ui/react'
 import TopNav from '../components/TopNav'
 import Header from '../components/Header'
 import ProductSection from '../components/ProductSection'
-import DescriptionSection from '../components/DescriptionSection'
-import SurveySection from '../components/SurveySection'
-import AdvantagesSection from '../components/AdvantagesSection'
 import OrderSection from '../components/OrderSection'
 import Footer from '../components/Footer'
 
@@ -34,9 +31,6 @@ function Home() {
       <TopNav onSearch={handleSearch} />
       <Header />
       <ProductSection searchQuery={searchQuery} />
-      <DescriptionSection />
-      <SurveySection />
-      <AdvantagesSection />
       <OrderSection />
       <Footer />
     </Box>

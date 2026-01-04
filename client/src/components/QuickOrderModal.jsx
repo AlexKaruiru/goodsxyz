@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { Box, Container, Heading, VStack, Text, Input, Button, Flex, Spacer, Textarea, Badge } from '@chakra-ui/react'
+import { Dialog, Box, Text, Input, Button, Textarea, Field, CloseButton, Portal, Flex } from '@chakra-ui/react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import { submitOrderForm } from '../utils/orderService'
+import { submitOrder } from '../utils/orderService'
 import { toaster } from './ui/toaster'
 
-const OrderSection = () => {
+const QuickOrderModal = ({ isOpen, onClose, product }) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -30,11 +30,14 @@ const OrderSection = () => {
     setIsSubmitting(true)
 
     try {
-      await submitOrderForm({
+      await submitOrder({
         name: formData.name,
         phone: formData.phone,
         deliveryAddress: formData.deliveryAddress,
-        source: 'order-form'
+        location: formData.deliveryAddress,
+        productId: product?.id,
+        productName: product?.name,
+        price: product?.price
       })
 
       toaster.create({
@@ -44,12 +47,13 @@ const OrderSection = () => {
         duration: 5000,
       })
 
-      // Reset form
+      // Reset form and close modal
       setFormData({
         name: '',
         phone: '',
         deliveryAddress: ''
       })
+      onClose()
     } catch (error) {
       toaster.create({
         title: 'Error submitting order',
@@ -70,23 +74,23 @@ const OrderSection = () => {
   }
 
   return (
-    <Box as="section" py={{ base: 12, md: 20 }} pb={{ base: 12, md: 24 }} bg="sectionPeach" position="relative" zIndex={6} mt={{ base: 0, md: -30 }} id="order">
-      <Container maxW="1200px" px={{ base: 0, md: 6 }} mx="auto">
-        <VStack spacing={8} px={{ base: 4, md: 0 }} w="100%" align="center">
-          <Box textAlign="center" mb="4" w="100%">
-            <Heading size="xl" mb="4" color="gray.800">
-              Place Your Order
-            </Heading>
-            <Text fontSize="lg" color="gray.600" mb="8">
-              Fill in your details and we'll contact you to confirm your order
-            </Text>
-          </Box>
-
-          <Box w="100%" display="flex" justifyContent="center" px={{ base: 4, md: 0 }}>
-            <Box w="100%" maxW="700px" bg="gray.50" p={{ base: 6, md: 10 }} borderRadius="xl" boxShadow="lg">
-              <form onSubmit={handleSubmit}>
-                <Box mb="4">
-                  <Text fontWeight="bold" mb="2">NAME *</Text>
+    <Dialog.Root open={isOpen} onOpenChange={(e) => !e.open && onClose()}>
+      <Portal>
+        <Dialog.Backdrop sx={{ zIndex: 10001 }} />
+        <Dialog.Positioner sx={{ zIndex: 10002 }}>
+          <Dialog.Content maxW="500px" p={0} sx={{ zIndex: 10002 }}>
+            <Dialog.Header position="relative" px={6} pt={6} pb={4}>
+              <Dialog.Title fontSize="xl" fontWeight="bold">
+                Order Now
+              </Dialog.Title>
+              <Dialog.CloseTrigger asChild>
+                <CloseButton size="sm" position="absolute" right="4" top="4" />
+              </Dialog.CloseTrigger>
+            </Dialog.Header>
+            <Dialog.Body px={6} py={4}>
+              <form onSubmit={handleSubmit} id="order-form">
+                <Field.Root mb="4">
+                  <Field.Label>NAME *</Field.Label>
                   <Input
                     name="name"
                     type="text"
@@ -94,12 +98,11 @@ const OrderSection = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    bg="white"
                   />
-                </Box>
+                </Field.Root>
 
-                <Box mb="4">
-                  <Text fontWeight="bold" mb="2">PHONE NUMBER *</Text>
+                <Field.Root mb="4">
+                  <Field.Label>PHONE NUMBER *</Field.Label>
                   <Box
                     className="phone-input-wrapper"
                     sx={{
@@ -142,51 +145,64 @@ const OrderSection = () => {
                       placeholder="Phone number"
                     />
                   </Box>
-                </Box>
+                </Field.Root>
 
-                <Box mb="4">
-                  <Text fontWeight="bold" mb="2">DELIVERY ADDRESS *</Text>
+                <Field.Root mb="4">
+                  <Field.Label>DELIVERY ADDRESS *</Field.Label>
                   <Textarea
                     name="deliveryAddress"
                     placeholder="Street, City, Area, etc."
                     value={formData.deliveryAddress}
                     onChange={handleChange}
                     required
-                    bg="white"
                     rows={4}
                   />
-                </Box>
-
+                </Field.Root>
+              </form>
+            </Dialog.Body>
+            <Dialog.Footer px={6} pb={6} pt={4}>
+              <Flex gap="3" w="100%">
                 <Button
                   type="submit"
+                  form="order-form"
                   bg="brandOrange"
                   color="white"
-                  size="lg"
-                  w="100%"
-                  py={7}
-                  fontSize="xl"
+                  flex="1"
+                  minW="120px"
+                  px="6"
+                  py="3"
+                  fontSize="md"
                   fontWeight="bold"
-                  borderRadius="full"
-                  boxShadow="xl"
-                  isLoading={isSubmitting}
+                  loading={isSubmitting}
                   loadingText="Submitting..."
                   _hover={{ 
                     bg: 'brandOrange', 
-                    transform: 'translateY(-2px)',
-                    boxShadow: '2xl'
+                    opacity: 0.9
                   }}
-                  transition="all 0.2s"
                 >
                   ORDER
                 </Button>
-              </form>
-            </Box>
-          </Box>
-        </VStack>
-      </Container>
-    </Box>
+                <Button 
+                  colorPalette="gray" 
+                  variant="outline" 
+                  flex="1"
+                  minW="120px"
+                  px="6"
+                  py="3"
+                  fontSize="md"
+                  fontWeight="medium"
+                  onClick={onClose}
+                >
+                  Cancel
+                </Button>
+              </Flex>
+            </Dialog.Footer>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
   )
 }
 
-export default OrderSection
+export default QuickOrderModal
 
