@@ -32,7 +32,7 @@ const AdvantagesSection = () => {
     <Box as="section" py={{ base: 12, md: 20 }} bg="sectionYellowGreen" position="relative" zIndex={5} mt={{ base: 0, md: -15 }}>
       <Container maxW="1200px" px={{ base: 0, md: 6 }} mx="auto">
         <Heading size="xl" textAlign="center" mb={12} color="gray.800">
-          Advantages of Goodsxyz for back and joints
+          Advantages of SupleeHub for back and joints
         </Heading>
         <Box w="100%" display="flex" justifyContent="center" px={{ base: 4, md: 6, lg: 8 }}>
           <SimpleGrid 

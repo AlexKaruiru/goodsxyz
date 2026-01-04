@@ -43,7 +43,7 @@ export const sendContactEmail = async (data) => {
         </div>
         
         <p style="color: #666; font-size: 12px; margin-top: 30px;">
-          This email was sent from the Goodsxyz website order form.
+          This email was sent from the SupleeHub website order form.
         </p>
       </div>
     `,
@@ -58,7 +58,7 @@ Source: ${source || 'order-form'}
 
 ACTION REQUIRED: Please contact the customer at ${phone || 'the phone number provided'} to confirm the order and arrange delivery.
 
-This email was sent from the Goodsxyz website order form.
+This email was sent from the SupleeHub website order form.
     `
   }
 
@@ -143,7 +143,7 @@ export const sendOrderEmail = async (data) => {
         </div>
         
         <p style="color: #666; font-size: 12px; margin-top: 30px;">
-          This email was sent from the Goodsxyz website order form.
+          This email was sent from the SupleeHub website order form.
         </p>
       </div>
     `,
@@ -170,7 +170,7 @@ ${productIngredients && productIngredients.length > 0 ? `Ingredients:\n${product
 
 ACTION REQUIRED: Please contact the customer at ${phone || 'the phone number provided'} to confirm the order and arrange delivery.
 
-This email was sent from the Goodsxyz website order form.
+This email was sent from the SupleeHub website order form.
     `
   }
 

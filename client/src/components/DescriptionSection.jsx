@@ -6,7 +6,7 @@ const DescriptionSection = () => {
       <Container maxW="1200px" px={{ base: 0, md: 6 }} mx="auto">
         <Box maxW="900px" w="100%" mx="auto" bg="white" p={{ base: 6, md: 10 }} px={{ base: 4, md: 10 }} borderRadius="xl" boxShadow="md">
           <Text fontSize={{ base: 'lg', md: 'xl' }} mb={6} lineHeight="tall" color="gray.700">
-            <Text as="i" fontWeight="bold" color="brandPurple" fontSize={{ base: 'xl', md: '2xl' }}>Goodsxyz</Text> can quickly eliminate pain from osteoarthritis and osteochondrosis. 
+            <Text as="i" fontWeight="bold" color="brandPurple" fontSize={{ base: 'xl', md: '2xl' }}>SupleeHub</Text> can quickly eliminate pain from osteoarthritis and osteochondrosis. 
             Reduces muscle spasm and inflammation, and effective treatment for osteochondrosis and osteoarthritis 
             because it slows the cartilaginous tissue degeneration process, and improves metabolism to promote 
             regeneration of articular cartilage.
@@ -33,7 +33,7 @@ const DescriptionSection = () => {
               }}
               transition="all 0.2s"
             >
-              Goodsxyz only uses active components
+              SupleeHub only uses active components
             </Button>
           </Box>
         </Box>

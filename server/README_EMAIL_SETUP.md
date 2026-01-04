@@ -53,3 +53,6 @@ After configuration, restart the server and test the contact form. Emails will b
 - **Connection timeout**: Check your SMTP host and port settings
 - **Email not received**: Check spam folder and verify the recipient email address
 
+
+
+

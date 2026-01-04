@@ -1,22 +1,10 @@
 {
-  "name": "goodsxyz",
+  "name": "SupleeHub",
   "version": "1.0.0",
-  "description": "Flekosteel landing page with React frontend and Node.js backend",
-  "main": "server/server.js",
-  "type": "module",
+  "private": true,
   "scripts": {
-    "start": "node server/server.js",
-    "server": "nodemon server/server.js",
-    "client": "npm run dev --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "npm run build --prefix client"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "concurrently": "^8.2.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
+    "dev": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "preview": "cd client && npm run preview"
   }
 }

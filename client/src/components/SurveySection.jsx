@@ -30,7 +30,7 @@ const SurveySection = () => {
       <Container maxW="1200px" px={{ base: 0, md: 6 }} mx="auto">
         <VStack spacing={8} align="stretch" px={{ base: 4, md: 0 }} maxW="800px" mx="auto">
           <Heading size="xl" textAlign="center" mb={4} color="gray.800">
-            Need Goodsxyz? Complete this survey:
+            Need SupleeHub? Complete this survey:
           </Heading>
 
           {currentQuestion < questions.length ? (
@@ -87,9 +87,9 @@ const SurveySection = () => {
             <Box p={10} bg="blue.50" borderRadius="xl" boxShadow="md">
               <Text fontSize="xl" lineHeight="tall" color="gray.700">
                 An injury or bruise can happen anytime - and it's easy to fix them asap! Try{' '}
-                <Text as="span" fontWeight="bold" color="brandBlue">Goodsxyz</Text> which alleviates sprains, 
+                <Text as="span" fontWeight="bold" color="brandBlue">SupleeHub</Text> which alleviates sprains, 
                 contusions and even osteoarthritis. The unique capability of{' '}
-                <Text as="span" fontWeight="bold" color="brandBlue">Goodsxyz</Text> to relieve pain and inflammation 
+                <Text as="span" fontWeight="bold" color="brandBlue">SupleeHub</Text> to relieve pain and inflammation 
                 will give you comfort anytime. Longer use of this product will fix long-term ailments 
                 and stimulate the cartilaginous tissue regeneration.
               </Text>

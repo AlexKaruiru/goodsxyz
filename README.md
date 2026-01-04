@@ -1,11 +1,11 @@
-# GoodsXYZ - Flekosteel Landing Page
+# SupleeHub - Flekosteel Landing Page
 
 A full-stack application with React + Vite frontend and Node.js/Express backend, converted from the reference HTML landing page.
 
 ## Project Structure
 
 ```
-goodsxyz/
+SupleeHub/
 ├── client/          # React + Vite frontend
 │   ├── src/
 │   │   ├── components/  # React components

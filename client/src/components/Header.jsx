@@ -11,7 +11,7 @@ const Header = () => {
             Painful joints or back?
           </Heading>
           <Text fontSize="xl" color="gray.700" textAlign="center" maxW="800px">
-            Goodsxyz is an effective product for osteochondrosis, osteoarthritis and injuries!
+            SupleeHub is an effective product for osteochondrosis, osteoarthritis and injuries!
           </Text>
         </VStack>
       </Container>

@@ -23,7 +23,7 @@ export const submitOrderForm = async (formData) => {
     // Note: Recipient emails should be configured in the EmailJS template settings
     // The template in EmailJS dashboard should be HTML format
     const templateParams = {
-      from_name: 'GoodsXYZ', // Display name, not email address
+      from_name: 'SupleeHub', // Display name, not email address
       to_email: config.email.recipients.join(','), // Recipient emails (comma-separated)
       customer_name: name,
       customer_phone: phone,
@@ -89,7 +89,7 @@ export const submitOrder = async (orderData) => {
     // Note: Recipient emails should be configured in the EmailJS template settings
     // The template in EmailJS dashboard should be HTML format
     const templateParams = {
-      from_name: 'GoodsXYZ', // Display name, not email address
+      from_name: 'SupleeHub', // Display name, not email address
       to_email: config.email.recipients.join(','), // Recipient emails (comma-separated)
       customer_name: name,
       customer_phone: phone,

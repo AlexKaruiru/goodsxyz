@@ -141,7 +141,7 @@ const TopNav = ({ onSearch }) => {
             cursor="pointer"
             flexShrink={0}
           >
-            <Image src={logoImage} alt="Goodsxyz Logo" h="50px" />
+            <Image src={logoImage} alt="SupleeHub Logo" h="50px" />
           </Box>
 
           {/* Navigation Menu */}

@@ -59,7 +59,7 @@ Go to [Email Templates](https://dashboard.emailjs.com/admin/templates) and creat
     <div class="action-box">
       <p style="margin: 0; color: #856404;"><strong>ACTION REQUIRED:</strong> Please contact the customer at <strong>{{customer_phone}}</strong> to confirm the order and arrange delivery.</p>
     </div>
-    <p style="color: #666; font-size: 12px; margin-top: 30px;">This email was sent from the Goodsxyz website order form.</p>
+    <p style="color: #666; font-size: 12px; margin-top: 30px;">This email was sent from the SupleeHub website order form.</p>
   </div>
 </body>
 </html>
@@ -125,7 +125,7 @@ Go to [Email Templates](https://dashboard.emailjs.com/admin/templates) and creat
     <div class="action-box">
       <p style="margin: 0; color: #856404;"><strong>ACTION REQUIRED:</strong> Please contact the customer at <strong>{{customer_phone}}</strong> to confirm the order and arrange delivery.</p>
     </div>
-    <p style="color: #666; font-size: 12px; margin-top: 30px;">This email was sent from the Goodsxyz website order form.</p>
+    <p style="color: #666; font-size: 12px; margin-top: 30px;">This email was sent from the SupleeHub website order form.</p>
   </div>
 </body>
 </html>
@@ -192,5 +192,7 @@ The code sends these variables that you can use in your HTML template:
 - [Adding Email Service](https://www.emailjs.com/docs/tutorial/adding-email-service/)
 - [Creating Email Templates](https://www.emailjs.com/docs/tutorial/creating-contact-form/)
 - [React Example](https://www.emailjs.com/docs/examples/reactjs/)
+
+
 
 
