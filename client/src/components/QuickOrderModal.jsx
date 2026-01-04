@@ -3,7 +3,7 @@ import { Dialog, Box, Text, Input, Button, Textarea, Field, CloseButton, Portal,
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { submitOrder } from '../utils/orderService'
-import { toaster } from './ui/toaster'
+import { toaster, createToast } from './ui/toaster'
 
 const QuickOrderModal = ({ isOpen, onClose, product }) => {
   const [formData, setFormData] = useState({
@@ -18,7 +18,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
     
     // Validate: all fields are required
     if (!formData.name || !formData.phone || !formData.deliveryAddress) {
-      toaster.create({
+      createToast({
         title: 'Validation Error',
         description: 'Please fill in all fields: Name, Phone Number, and Delivery Address',
         type: 'error',
@@ -40,7 +40,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
         price: product?.price
       })
 
-      toaster.create({
+      createToast({
         title: 'Order submitted successfully!',
         description: 'We have received your order. We will contact you shortly to confirm.',
         type: 'success',
@@ -55,11 +55,17 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
       })
       onClose()
     } catch (error) {
-      toaster.create({
-        title: 'Error submitting order',
-        description: error.message || 'Please try again later.',
+      // Handle EmailJS specific error
+      const errorMessage = error.text || error.message || 'Please try again later.'
+      const isRecipientError = errorMessage.includes('recipients address is empty')
+      
+      createToast({
+        title: isRecipientError ? 'Email Configuration Error' : 'Error submitting order',
+        description: isRecipientError 
+          ? 'Please configure recipient emails in your EmailJS template settings.'
+          : errorMessage,
         type: 'error',
-        duration: 5000,
+        duration: 7000,
       })
     } finally {
       setIsSubmitting(false)

@@ -18,7 +18,7 @@ const OrderSection = () => {
     
     // Validate: all fields are required
     if (!formData.name || !formData.phone || !formData.deliveryAddress) {
-      toaster.create({
+      createToast({
         title: 'Validation Error',
         description: 'Please fill in all fields: Name, Phone Number, and Delivery Address',
         type: 'error',
@@ -37,7 +37,7 @@ const OrderSection = () => {
         source: 'order-form'
       })
 
-      toaster.create({
+      createToast({
         title: 'Order submitted successfully!',
         description: 'We have received your order. We will contact you shortly to confirm.',
         type: 'success',
@@ -51,7 +51,7 @@ const OrderSection = () => {
         deliveryAddress: ''
       })
     } catch (error) {
-      toaster.create({
+      createToast({
         title: 'Error submitting order',
         description: error.message || 'Please try again later.',
         type: 'error',
