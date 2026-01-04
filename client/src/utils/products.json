@@ -2,7 +2,7 @@
   {
     "id": "product-a",
     "name": "Wormwood",
-    "description": "Wormwood is an effective solution for osteochondrosis, osteoarthritis and injuries. It quickly eliminates pain, reduces muscle spasm and inflammation, and promotes regeneration of articular cartilage.",
+    "description": "Wormwood is an effective product for osteochondrosis, osteoarthritis and injuries. It can quickly eliminate pain from osteoarthritis and osteochondrosis. Reduces muscle spasm and inflammation, and effective treatment for osteochondrosis and osteoarthritis because it slows the cartilaginous tissue degeneration process, and improves metabolism to promote regeneration of articular cartilage. The positive effect can be seen after the first application. When used regularly, diseases of joints and backbone are stopped fast.",
     "price": 5190,
     "originalPrice": 10380,
     "discount": 50,
@@ -12,37 +12,7 @@
       "Stimulates cartilage regeneration",
       "Alleviates muscle hypertension",
       "Lessens swelling",
-      "Eliminates inflammations",
-      "Improves joint mobility",
-      "Reduces stiffness",
-      "Promotes healing"
-    ],
-    "ingredients": [
-      "Natural herbal extracts",
-      "Anti-inflammatory compounds",
-      "Cartilage-supporting nutrients",
-      "Pain-relieving agents"
-    ],
-    "category": "pain-relief",
-    "inStock": true
-  },
-  {
-    "id": "product-b",
-    "name": "Biotin",
-    "description": "Biotin provides comprehensive relief for joint and back pain. Its unique formula targets the root causes of discomfort while supporting long-term joint health.",
-    "price": 5190,
-    "originalPrice": 10380,
-    "discount": 50,
-    "image": "biotin.jpg",
-    "benefits": [
-      "Relieves pain",
-      "Stimulates cartilage regeneration",
-      "Alleviates muscle hypertension",
-      "Lessens swelling",
-      "Eliminates inflammations",
-      "Enhances flexibility",
-      "Strengthens joints",
-      "Prevents further damage"
+      "Eliminates inflammations"
     ],
     "ingredients": [
       "Natural herbal extracts",

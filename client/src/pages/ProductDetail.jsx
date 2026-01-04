@@ -18,6 +18,29 @@ const imageMap = {
   'product2.webp': biotinImage // fallback
 }
 
+const advantagesData = [
+  {
+    title: "NUMEROUS EFFECTS",
+    description: "Fixes ailments of traumatic and age-related joints and spine."
+  },
+  {
+    title: "PERFECTLY SAFE - NO SIDE-EFFECTS",
+    description: "Completely safe for one-time or regular usage"
+  },
+  {
+    title: "100% NATURAL COMPOSITION",
+    description: "Only herbal active components"
+  },
+  {
+    title: "HIGH EFFICIENCY",
+    description: "improves the general condition and reduces pain after first application"
+  },
+  {
+    title: "TESTED BY EXPERTS",
+    description: "Certified and meets high standards*"
+  }
+]
+
 const ProductDetail = () => {
   const { productName } = useParams()
   const navigate = useNavigate()
@@ -73,7 +96,7 @@ const ProductDetail = () => {
           <Container maxW="1200px" px={{ base: 4, md: 6 }} mx="auto" py={10}>
             <Text color="red.500">{error || 'Product not found'}</Text>
             <Button mt={4} onClick={() => navigate('/')}>
-              Back to Products
+              Back 
             </Button>
           </Container>
         </Box>
@@ -200,6 +223,75 @@ const ProductDetail = () => {
             </Box>
           </Flex>
         </Container>
+        </Box>
+
+        {/* Advantages Section */}
+        <Box as="section" py={{ base: 12, md: 16 }} bg="sectionYellowGreen">
+          <Container maxW="1200px" px={{ base: 4, md: 6 }} mx="auto">
+            <Heading 
+              size="xl" 
+              textAlign="center" 
+              mb={{ base: 8, md: 12 }} 
+              color="gray.800"
+              fontSize={{ base: "2xl", md: "3xl" }}
+            >
+              Advantages of SupleeHub for back and joints
+            </Heading>
+            <Box as="ul" listStyleType="none" p={0} m={0} maxW="900px" mx="auto">
+              <VStack spacing={0} align="stretch" divider={<Box borderColor="gray.200" />}>
+                {advantagesData.map((advantage, index) => (
+                  <Box
+                    key={index}
+                    as="li"
+                    py={{ base: 6, md: 8 }}
+                    px={{ base: 4, md: 6 }}
+                    _hover={{ bg: 'rgba(255, 255, 255, 0.5)' }}
+                    transition="background 0.2s"
+                  >
+                    <Flex 
+                      direction={{ base: 'column', md: 'row' }} 
+                      align={{ base: 'flex-start', md: 'center' }}
+                      gap={{ base: 3, md: 6 }}
+                    >
+                      {/* Icon */}
+                      <Box
+                        w={{ base: "50px", md: "60px" }}
+                        h={{ base: "50px", md: "60px" }}
+                        bg="brandBlue"
+                        borderRadius="full"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        flexShrink={0}
+                      >
+                        <Text fontSize={{ base: "lg", md: "xl" }} color="white" fontWeight="bold">⚡</Text>
+                      </Box>
+                      
+                      {/* Content */}
+                      <Box flex="1">
+                        <Heading 
+                          size="sm" 
+                          fontWeight="bold" 
+                          color="gray.800"
+                          fontSize={{ base: "md", md: "lg" }}
+                          mb={2}
+                        >
+                          {advantage.title}
+                        </Heading>
+                        <Text 
+                          fontSize={{ base: "sm", md: "md" }} 
+                          color="gray.600" 
+                          lineHeight="tall"
+                        >
+                          {advantage.description}
+                        </Text>
+                      </Box>
+                    </Flex>
+                  </Box>
+                ))}
+              </VStack>
+            </Box>
+          </Container>
         </Box>
 
         <Footer />
