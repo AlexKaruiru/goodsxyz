@@ -1,45 +1,26 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Box, Container, Flex, VStack, HStack, Text, Button, Badge, Heading, Image, SimpleGrid } from '@chakra-ui/react'
+import { Box, Container, Flex, VStack, HStack, Stack, Text, Button, Badge, Heading, Image, SimpleGrid, Icon, Center } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+import { TbArrowLeft, TbCheck } from 'react-icons/tb'
 import wormwoodImage from '../images/wormwood.jpg'
 import biotinImage from '../images/biotin.jpg'
 import TopNav from '../components/TopNav'
 import MobileNav from '../components/MobileNav'
 import Footer from '../components/Footer'
 import QuickOrderModal from '../components/QuickOrderModal'
+import AdvantagesSection from '../components/AdvantagesSection'
 import { getProductByName } from '../utils/productsService'
-import { toaster } from '../components/ui/toaster'
 
-// Map product image names to actual imports
+const MotionBox = motion.create(Box)
+const MotionImage = motion.create(Image)
+
 const imageMap = {
   'wormwood.jpg': wormwoodImage,
   'biotin.jpg': biotinImage,
-  'product1.webp': wormwoodImage, // fallback
-  'product2.webp': biotinImage // fallback
+  'product1.webp': wormwoodImage,
+  'product2.webp': biotinImage
 }
-
-const advantagesData = [
-  {
-    title: "NUMEROUS EFFECTS",
-    description: "Fixes ailments of traumatic and age-related joints and spine."
-  },
-  {
-    title: "PERFECTLY SAFE - NO SIDE-EFFECTS",
-    description: "Completely safe for one-time or regular usage"
-  },
-  {
-    title: "100% NATURAL COMPOSITION",
-    description: "Only herbal active components"
-  },
-  {
-    title: "HIGH EFFICIENCY",
-    description: "improves the general condition and reduces pain after first application"
-  },
-  {
-    title: "TESTED BY EXPERTS",
-    description: "Certified and meets high standards*"
-  }
-]
 
 const ProductDetail = () => {
   const { productName } = useParams()
@@ -54,7 +35,6 @@ const ProductDetail = () => {
       try {
         const fetchedProduct = await getProductByName(productName)
         if (fetchedProduct) {
-          // Map image path to actual import
           if (fetchedProduct.image && imageMap[fetchedProduct.image]) {
             fetchedProduct.image = imageMap[fetchedProduct.image]
           }
@@ -74,232 +54,229 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <Box minH="100vh" bg="white" w="100%" maxW="100vw" overflowX="hidden">
+      <Box minH="100vh" bg="bg">
         <TopNav />
-        <MobileNav />
-        <Box pt={{ base: 0, md: '80px' }}>
-          <Container maxW="1200px" px={{ base: 4, md: 6 }} mx="auto" py={10}>
-            <Text>Loading product details...</Text>
-          </Container>
-        </Box>
-        <Footer />
+        <Center h="calc(100vh - 80px)">
+          <Text color="fg.muted">Loading product details...</Text>
+        </Center>
       </Box>
     )
   }
 
   if (error || !product) {
     return (
-      <Box minH="100vh" bg="white" w="100%" maxW="100vw" overflowX="hidden">
+      <Box minH="100vh" bg="bg">
         <TopNav />
-        <MobileNav />
-        <Box pt={{ base: 0, md: '80px' }}>
-          <Container maxW="1200px" px={{ base: 4, md: 6 }} mx="auto" py={10}>
-            <Text color="red.500">{error || 'Product not found'}</Text>
-            <Button mt={4} onClick={() => navigate('/')}>
-              Back 
-            </Button>
-          </Container>
-        </Box>
-        <Footer />
+        <Container maxW="1200px" py={20} textAlign="center">
+          <Text color="red.500" fontSize="xl" mb={8}>{error || 'Product not found'}</Text>
+          <Button onClick={() => navigate('/')} leftIcon={<TbArrowLeft />}>
+            Back to Home
+          </Button>
+        </Container>
       </Box>
     )
   }
 
   return (
-    <Box minH="100vh" bg="white" w="100%" maxW="100vw" overflowX="hidden">
+    <Box minH="100vh" bg="bg">
       <TopNav />
       <MobileNav />
-      <Box pt={{ base: 0, md: '80px' }}>
-        <Box as="section" py={{ base: 8, md: 16 }} bg="sectionTeal">
-        <Container maxW="1200px" px={{ base: 4, md: 6 }} mx="auto">
+
+      <Box pt={{ base: 20, md: 24 }} pb={20}>
+        <Container maxW="1200px" px={6}>
           <Button
-            mb={6}
+            mb={10}
             onClick={() => navigate('/')}
             variant="ghost"
-            _hover={{ bg: 'gray.100' }}
+            color="fg.muted"
+            _hover={{ color: 'brandOrange', bg: 'brandOrange/10' }}
           >
-            ← Back to Products
+            <TbArrowLeft style={{ marginRight: '8px' }} /> Back to Products
           </Button>
 
-          <Flex direction={{ base: 'column', lg: 'row' }} gap={8} align="flex-start">
-            {/* Product Image */}
-            <Box flex="1" maxW={{ base: "100%", lg: "500px" }}>
-              <Box position="relative" w="100%" borderRadius="xl" overflow="hidden" bg="gray.100">
-                <Image 
-                  src={product.image} 
+          <Flex direction={{ base: 'column', lg: 'row' }} gap={16} align="flex-start">
+            {/* Image Section */}
+            <MotionBox
+              flex="1"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Box
+                position="relative"
+                borderRadius="3xl"
+                overflow="hidden"
+                bg="bg.subtle"
+                border="1px solid"
+                borderColor="bg.muted"
+                boxShadow="2xl"
+              >
+                <MotionImage
+                  src={product.image}
                   alt={product.name}
                   w="100%"
-                  h="auto"
-                  objectFit="cover"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.8 }}
                 />
                 <Badge
                   position="absolute"
-                  top={4}
-                  right={4}
+                  top={6}
+                  right={6}
                   bg="brandOrange"
                   color="white"
                   px={6}
                   py={3}
-                  fontSize="lg"
-                  fontWeight="bold"
+                  fontSize="xl"
+                  fontWeight="900"
                   borderRadius="full"
-                  boxShadow="xl"
-                  transform="rotate(15deg)"
+                  boxShadow="0 8px 16px rgba(255, 107, 53, 0.4)"
+                  transform="rotate(12deg)"
                 >
-                  DISCOUNT <Text as="span" fontSize="xl">50%</Text>
+                  SAVE 50%
                 </Badge>
               </Box>
-            </Box>
+            </MotionBox>
 
-            {/* Product Info */}
-            <Box flex="1" maxW={{ base: "100%", lg: "600px" }}>
-              <VStack spacing={6} align="stretch">
+            {/* Info Section */}
+            <MotionBox
+              flex="1.2"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <VStack spacing={8} align="stretch">
                 <Box>
-                  <Heading size="2xl" mb="4" color="gray.800">
+                  <Badge colorPalette="orange" variant="subtle" mb={4} p={2} borderRadius="md" fontWeight="bold">
+                    TRUSTED WELLNESS
+                  </Badge>
+                  <Heading size="4xl" color="fg" mb={6} lineHeight="tight">
                     {product.name}
                   </Heading>
-                  <Text fontSize="lg" color="gray.700" lineHeight="tall" mb="6">
+                  <Text fontSize="xl" color="fg.muted" lineHeight="tall">
                     {product.description}
                   </Text>
                 </Box>
 
-                {/* Pricing */}
-                <Box bg="gray.50" p={6} borderRadius="xl">
-                  <Text fontSize="sm" color="gray.600" mb="3">
-                    Advertising Spot <Text as="span" fontWeight="bold" color="brandOrange">DISCOUNT PRICE</Text>
-                  </Text>
-                  <Flex align="center" gap={4}>
-                    <Text fontSize="4xl" fontWeight="bold" color="brandOrange">
-                      {product.price.toLocaleString()} KES
-                    </Text>
-                    <Text fontSize="xl" color="gray.400" textDecoration="line-through">
-                      {product.originalPrice.toLocaleString()} KES
-                    </Text>
-                  </Flex>
+                <Box bg="bg.subtle" p={{ base: 6, md: 8 }} borderRadius="2xl" border="1px solid" borderColor="bg.muted">
+                  <VStack align="stretch" spacing={6}>
+                    <HStack justify="space-between" wrap="wrap" gap={4}>
+                      <VStack align="start" spacing={1}>
+                        <Text fontSize="sm" color="fg.subtle" fontWeight="bold" letterSpacing="widest">PRICE</Text>
+                        <Stack direction={{ base: 'column', sm: 'row' }} align={{ base: 'start', sm: 'baseline' }} spacing={{ base: 2, sm: 4 }}>
+                          <Text fontSize={{ base: "4xl", md: "5xl" }} fontWeight="900" color="brandOrange" lineHeight="1">
+                            {product.price.toLocaleString()} <Text as="span" fontSize={{ base: "xl", md: "2xl" }}>KES</Text>
+                          </Text>
+                          <Text fontSize={{ base: "lg", md: "xl" }} color="fg.subtle" textDecoration="line-through">
+                            {product.originalPrice.toLocaleString()} KES
+                          </Text>
+                        </Stack>
+                      </VStack>
+                      <Badge colorPalette="green" variant="solid" p={3} borderRadius="lg">
+                        IN STOCK
+                      </Badge>
+                    </HStack>
+
+                    <Button
+                      bg="brandOrange"
+                      color="white"
+                      size="xl"
+                      w="100%"
+                      h={{ base: "70px", md: "80px" }}
+                      fontSize={{ base: "xl", md: "2xl" }}
+                      fontWeight="900"
+                      borderRadius="full"
+                      boxShadow="0 12px 24px rgba(255, 107, 53, 0.3)"
+                      onClick={() => setIsOrderModalOpen(true)}
+                      _hover={{
+                        bg: 'brandOrange',
+                        transform: 'translateY(-4px)',
+                        boxShadow: '0 20px 40px rgba(255, 107, 53, 0.4)'
+                      }}
+                    >
+                      ORDER NOW
+                    </Button>
+                  </VStack>
                 </Box>
 
-                {/* Benefits */}
-                <Box>
-                  <Heading size="md" mb="4" color="gray.800">
-                    Benefits
+                <Box pt={4}>
+                  <Heading size="md" mb={6} color="fg" fontWeight="900">
+                    Why You'll Love It
                   </Heading>
-                  <SimpleGrid columns={{ base: 1, md: 2 }} spacing={3}>
+                  <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
                     {product.benefits.map((benefit, index) => (
-                      <Flex key={index} align="center" p="2">
-                        <Text as="span" mr="3" fontSize="lg" color="brandOrange">✓</Text>
-                        <Text fontSize="md">{benefit}</Text>
-                      </Flex>
+                      <HStack key={index} spacing={4} p={4} bg="bg.subtle" borderRadius="xl">
+                        <Box bg="brandOrange/20" p={2} borderRadius="lg">
+                          <TbCheck color="brandOrange" />
+                        </Box>
+                        <Text fontSize="md" fontWeight="bold" color="fg.muted">{benefit}</Text>
+                      </HStack>
                     ))}
                   </SimpleGrid>
                 </Box>
 
-                {/* Order Button */}
-                <Box bg="gray.50" p={{ base: 6, md: 8 }} borderRadius="xl">
-                  <Heading size="md" mb="6" color="gray.800">
-                    Order Now
-                  </Heading>
-                  <Button
-                    bg="brandOrange"
-                    color="white"
-                    size="lg"
-                    w="100%"
-                    py={7}
-                    fontSize="xl"
-                    fontWeight="bold"
-                    borderRadius="full"
-                    boxShadow="xl"
-                    onClick={() => setIsOrderModalOpen(true)}
-                    _hover={{ 
-                      bg: 'brandOrange', 
-                      transform: 'translateY(-2px)',
-                      boxShadow: '2xl'
-                    }}
-                    transition="all 0.2s"
-                  >
-                    ORDER NOW
-                  </Button>
+                {/* New "How it works" section */}
+                <Box pt={12}>
+                  <VStack spacing={8} align="stretch">
+                    <VStack align="start" spacing={2}>
+                      <Heading size="2xl" color="brandOrange" fontWeight="900">
+                        HOW {product.name} WORKS
+                      </Heading>
+                      <Text fontSize="lg" color="fg.muted">
+                        The effectiveness of {product.name.toLowerCase()} comes from the synergy between its active ingredients. Each component serves a specific function and together they address multiple aspects of joint health simultaneously.
+                      </Text>
+                    </VStack>
+
+                    <SimpleGrid columns={{ base: 1, md: 2 }} gap={8}>
+                      <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
+                        <Heading size="md" color="brandOrange" mb={3} fontWeight="900">
+                          CARTILAGE REGENERATION AND JOINT STRENGTHENING
+                        </Heading>
+                        <Text color="fg.muted">
+                          Shark liver oil acts as fundamental structural material for cartilage repair. It allows efficient absorption, which promotes the recovery of elasticity, mechanical resistance and reduction of joint friction.
+                        </Text>
+                      </VStack>
+
+                      <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
+                        <Heading size="md" color="brandOrange" mb={3} fontWeight="900">
+                          REDUCTION OF INFLAMMATION AND PAIN
+                        </Heading>
+                        <Text color="fg.muted">
+                          Flavonoids and phenolic acids possess anti-inflammatory properties that help reduce stiffness and joint pain. It also promotes local micro-circulation and contributes to the functional mobility of the joint.
+                        </Text>
+                      </VStack>
+
+                      <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
+                        <Heading size="md" color="brandOrange" mb={3} fontWeight="900">
+                          LUBRICATION AND PROTECTION AGAINST WEAR
+                        </Heading>
+                        <Text color="fg.muted">
+                          Wormwood stimulates the production of synovial fluid which functions as a natural lubricant, reducing cartilage wear and extending the useful life of joints under conditions of mechanical load.
+                        </Text>
+                      </VStack>
+
+                      <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
+                        <Heading size="md" color="brandOrange" mb={3} fontWeight="900">
+                          BONE STRENGTHENING AND INJURY PREVENTION
+                        </Heading>
+                        <Text color="fg.muted">
+                          The combination of collagen type II and vitamin D3 contributes to collagen synthesis, improves bone mineral density and prevents degenerative processes such as osteoporosis. In this way the joint support structure is reinforced.
+                        </Text>
+                      </VStack>
+                    </SimpleGrid>
+                  </VStack>
                 </Box>
               </VStack>
-            </Box>
+            </MotionBox>
           </Flex>
         </Container>
-        </Box>
-
-        {/* Advantages Section */}
-        <Box as="section" py={{ base: 12, md: 16 }} bg="sectionYellowGreen">
-          <Container maxW="1200px" px={{ base: 4, md: 6 }} mx="auto">
-            <Heading 
-              size="xl" 
-              textAlign="center" 
-              mb={{ base: 8, md: 12 }} 
-              color="gray.800"
-              fontSize={{ base: "2xl", md: "3xl" }}
-            >
-              Advantages of SupleeHub for back and joints
-            </Heading>
-            <Box as="ul" listStyleType="none" p={0} m={0} maxW="900px" mx="auto">
-              <VStack spacing={0} align="stretch" divider={<Box borderColor="gray.200" />}>
-                {advantagesData.map((advantage, index) => (
-                  <Box
-                    key={index}
-                    as="li"
-                    py={{ base: 6, md: 8 }}
-                    px={{ base: 4, md: 6 }}
-                    _hover={{ bg: 'rgba(255, 255, 255, 0.5)' }}
-                    transition="background 0.2s"
-                  >
-                    <Flex 
-                      direction={{ base: 'column', md: 'row' }} 
-                      align={{ base: 'flex-start', md: 'center' }}
-                      gap={{ base: 3, md: 6 }}
-                    >
-                      {/* Icon */}
-                      <Box
-                        w={{ base: "50px", md: "60px" }}
-                        h={{ base: "50px", md: "60px" }}
-                        bg="brandBlue"
-                        borderRadius="full"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        flexShrink={0}
-                      >
-                        <Text fontSize={{ base: "lg", md: "xl" }} color="white" fontWeight="bold">⚡</Text>
-                      </Box>
-                      
-                      {/* Content */}
-                      <Box flex="1">
-                        <Heading 
-                          size="sm" 
-                          fontWeight="bold" 
-                          color="gray.800"
-                          fontSize={{ base: "md", md: "lg" }}
-                          mb={2}
-                        >
-                          {advantage.title}
-                        </Heading>
-                        <Text 
-                          fontSize={{ base: "sm", md: "md" }} 
-                          color="gray.600" 
-                          lineHeight="tall"
-                        >
-                          {advantage.description}
-                        </Text>
-                      </Box>
-                    </Flex>
-                  </Box>
-                ))}
-              </VStack>
-            </Box>
-          </Container>
-        </Box>
-
-        <Footer />
       </Box>
-      
-      <QuickOrderModal 
-        isOpen={isOrderModalOpen} 
-        onClose={() => setIsOrderModalOpen(false)} 
+
+      <AdvantagesSection />
+      <Footer />
+
+      <QuickOrderModal
+        isOpen={isOrderModalOpen}
+        onClose={() => setIsOrderModalOpen(false)}
         product={product}
       />
     </Box>

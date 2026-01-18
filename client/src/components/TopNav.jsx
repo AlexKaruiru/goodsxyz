@@ -1,8 +1,9 @@
-import { Box, HStack, Input, Flex, Image } from '@chakra-ui/react'
+import { Box, HStack, Input, Flex, Image, Container } from '@chakra-ui/react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import logoImage from '../images/logo.webp'
 import { getAllProducts, getProductSlug } from '../utils/productsService'
+import { ColorModeButton } from './ui/color-mode'
 
 const TopNav = ({ onSearch }) => {
   const navigate = useNavigate()
@@ -37,7 +38,7 @@ const TopNav = ({ onSearch }) => {
 
   const handleNavClick = (e, item) => {
     e.preventDefault()
-    
+
     if (item.isHome) {
       if (location.pathname !== '/') {
         navigate('/')
@@ -122,12 +123,15 @@ const TopNav = ({ onSearch }) => {
       top={0}
       left={0}
       right={0}
-      bg="white"
-      boxShadow="md"
+      bg="bg/80"
+      backdropFilter="blur(10px)"
+      boxShadow="sm"
       zIndex={10000}
       display={{ base: 'none', md: 'block' }}
+      borderBottom="1px solid"
+      borderColor="bg.muted"
     >
-      <Box maxW="1200px" mx="auto" px={6} py={3}>
+      <Container maxW="1200px" px={6} py={3}>
         <Flex align="center" justify="space-between" gap={6}>
           {/* Logo */}
           <Box
@@ -140,51 +144,73 @@ const TopNav = ({ onSearch }) => {
             }}
             cursor="pointer"
             flexShrink={0}
+            transition="transform 0.2s"
+            _hover={{ transform: 'scale(1.05)' }}
           >
-            <Image src={logoImage} alt="SupleeHub Logo" h="50px" />
+            <Image src={logoImage} alt="SupleeHub Logo" h="45px" filter={{ _dark: 'brightness(0.9) invert(1)' }} />
           </Box>
 
           {/* Navigation Menu */}
-          <HStack spacing={12} flex="1" justify="center">
+          <HStack spacing={10} flex="1" justify="center">
             {menuItems.map((item, index) => (
               <Box
                 key={index}
                 onClick={(e) => handleNavClick(e, item)}
-                fontWeight="medium"
-                color="gray.700"
+                fontWeight="600"
+                color="fg.muted"
                 cursor="pointer"
-                fontSize="md"
+                fontSize="sm"
                 px={2}
-                _hover={{ 
+                position="relative"
+                _hover={{
                   color: 'brandOrange',
-                  transform: 'translateY(-2px)'
                 }}
                 transition="all 0.2s"
+                css={{
+                  '&:after': {
+                    content: '""',
+                    position: 'absolute',
+                    width: '0',
+                    height: '2px',
+                    bottom: '-4px',
+                    left: '50%',
+                    backgroundColor: 'brandOrange',
+                    transition: 'all 0.3s',
+                    transform: 'translateX(-50%)',
+                  },
+                  '&:hover:after': {
+                    width: '100%',
+                  }
+                }}
               >
                 {item.label}
               </Box>
             ))}
           </HStack>
 
-          {/* Search Bar */}
-          <Box flexShrink={0} minW="200px" px={2}>
-            <Input
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              size="md"
-              bg="gray.50"
-              border="1px solid"
-              borderColor="gray.300"
-              px={4}
-              _focus={{
-                borderColor: 'brandOrange',
-                boxShadow: '0 0 0 1px brandOrange'
-              }}
-            />
-          </Box>
+          {/* Search Bar & Actions */}
+          <HStack spacing={4} flexShrink={0}>
+            <Box minW="200px">
+              <Input
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                size="sm"
+                bg="bg.subtle"
+                borderRadius="full"
+                border="1px solid"
+                borderColor="bg.muted"
+                px={4}
+                _focus={{
+                  borderColor: 'brandOrange',
+                  boxShadow: '0 0 0 1px brandOrange'
+                }}
+              />
+            </Box>
+            <ColorModeButton />
+          </HStack>
         </Flex>
-      </Box>
+      </Container>
     </Box>
   )
 }

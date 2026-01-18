@@ -3,6 +3,9 @@ import { Box } from '@chakra-ui/react'
 import TopNav from '../components/TopNav'
 import Header from '../components/Header'
 import ProductSection from '../components/ProductSection'
+import WellnessQuiz from '../components/WellnessQuiz'
+import AdvantagesSection from '../components/AdvantagesSection'
+import TrustSection from '../components/TrustSection'
 import OrderSection from '../components/OrderSection'
 import Footer from '../components/Footer'
 
@@ -27,10 +30,13 @@ function Home() {
   }
 
   return (
-    <Box minH="100vh" bg="white" w="100%" maxW="100vw" overflowX="hidden">
+    <Box minH="100vh" bg="bg" w="100%" maxW="100vw" overflowX="hidden">
       <TopNav onSearch={handleSearch} />
       <Header />
       <ProductSection searchQuery={searchQuery} />
+      <WellnessQuiz />
+      <AdvantagesSection />
+      <TrustSection />
       <OrderSection />
       <Footer />
     </Box>

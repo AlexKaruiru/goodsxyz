@@ -1,33 +1,33 @@
-import { Box, Container, Text, Link, HStack, VStack } from '@chakra-ui/react'
+import { Box, Container, Text, Link, HStack, VStack, Separator } from '@chakra-ui/react'
 
 const Footer = () => {
   return (
-    <Box as="footer" bg="sectionBeige" py={10} position="relative" zIndex={7} mt={{ base: 0, md: 0 }}>
-      <Container maxW="1200px" px={{ base: 0, md: 6 }}>
-        <VStack spacing={4} px={{ base: 4, md: 0 }}>
-          <Text fontSize="sm" color="brandGray">
-            &copy; {new Date().getFullYear()} Copyright. All rights reserved.
-          </Text>
-          <HStack spacing={2} fontSize="sm" color="brandGray">
-            <Link href="#" _hover={{ textDecoration: 'underline' }}>
-              Terms & Conditions
-            </Link>
-            <Text>|</Text>
-            <Link href="#" _hover={{ textDecoration: 'underline' }}>
-              Privacy Policy
-            </Link>
-            <Text>|</Text>
-            <Link href="#" _hover={{ textDecoration: 'underline' }}>
-              Feedback
-            </Link>
+    <Box as="footer" bg="bg" py={12} borderTop="1px solid" borderColor="bg.muted">
+      <Container maxW="1200px" px={6} mx="auto">
+        <VStack spacing={8} align="center">
+          <VStack spacing={4} align="center">
+            <Box fontWeight="900" fontSize="2xl" color="brandOrange">
+              SupleeHub
+            </Box>
+            <Text fontSize="sm" color="fg.muted" textAlign="center" maxW="600px">
+              Your trusted partner for premium natural wellness solutions. Dedicated to improving your quality of life through science-backed nutrition.
+            </Text>
+          </VStack>
+
+          <HStack spacing={6} fontSize="sm" color="fg.muted" flexWrap="wrap" justify="center">
+            <Link href="#" _hover={{ color: 'brandOrange' }}>Terms & Conditions</Link>
+            <Link href="#" _hover={{ color: 'brandOrange' }}>Privacy Policy</Link>
+            <Link href="#" _hover={{ color: 'brandOrange' }}>Cookie Policy</Link>
+            <Link href="#" _hover={{ color: 'brandOrange' }}>About Us</Link>
           </HStack>
-          <Text fontSize="xs" color="brandGray" textAlign="center" maxW="800px" mt={4}>
-            By clicking the «order» button you confirm that you have read{' '}
-            <Link href="#" _hover={{ textDecoration: 'underline' }}>
-              Privacy Policy
-            </Link>{' '}
-            and give your consent to the procession of your personal data.
-          </Text>
+
+          <VStack spacing={4} w="100%">
+            <Box w="100%" h="1px" bg="bg.muted" />
+            <Text fontSize="xs" color="fg.subtle" textAlign="center" maxW="800px">
+              &copy; {new Date().getFullYear()} SupleeHub. All rights reserved.
+              By interacting with this site, you agree to our terms of service.
+            </Text>
+          </VStack>
         </VStack>
       </Container>
     </Box>

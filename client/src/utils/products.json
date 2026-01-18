@@ -1,16 +1,16 @@
 [
   {
     "id": "product-a",
-    "name": "Wormwood",
-    "description": "Wormwood is a multifunctional natural cream for people with osteoarthritis, arthritis or bone deterioration that makes movement difficult. Wormwood reduces inflammation, strengthens joints and prevents the problem from getting worse.",
+    "name": "WORMWOOD",
+    "description": "Wormwood is multifunctional natural cream for people with osteoarthritis,arthritis or bone deterioration that makes movement difficult.Wormwood reduces inflammation,strengthens joints and prevents the problem from getting worse.",
     "price": 5190,
     "originalPrice": 10380,
     "discount": 50,
     "image": "wormwood.jpg",
     "benefits": [
       "Say goodbye to pain! - Relieves discomfort in joints and muscles so you can enjoy everyday without aches and stiffness",
-      "Get your mobility back - Forget about stiffness and move freely with ease and comfort",
-      "Advanced formula with premium ingredients - Shark liver oil, vitamin D3, collagen, saffron, solitary living, absinthin, resins, log and, flavonoids, phenolic acids and photochemicals"
+      "Get your mobility back - forget about stiffness and move freely with ease and comfort.",
+      "Advanced formula with premium ingredients - Shark liver oil ,vitamin D3, collagen,saffron ,solitary living ,absinthin,resins,log and,flavonoids,phenolic acids and photochemicals."
     ],
     "ingredients": [
       "Shark liver oil",
@@ -29,4 +29,3 @@
     "inStock": true
   }
 ]
-

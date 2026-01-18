@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Dialog, Box, Text, Input, Button, Textarea, Field, CloseButton, Portal, Flex } from '@chakra-ui/react'
+import { Dialog, Box, Text, Input, Button, Textarea, Field, CloseButton, Portal, Flex, VStack } from '@chakra-ui/react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { submitOrder } from '../utils/orderService'
@@ -14,7 +14,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     // Validate: all fields are required
     if (!formData.name || !formData.phone || !formData.deliveryAddress) {
       alert('Please fill in all fields: Name, Phone Number, and Delivery Address')
@@ -47,11 +47,11 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
       // Handle EmailJS specific error
       const errorMessage = error.text || error.message || 'Please try again later.'
       const isRecipientError = errorMessage.includes('recipients address is empty')
-      
-      const alertMessage = isRecipientError 
+
+      const alertMessage = isRecipientError
         ? 'Email Configuration Error: Please configure recipient emails in your EmailJS template settings.'
         : `Error submitting order: ${errorMessage}`
-      
+
       alert(alertMessage)
     } finally {
       setIsSubmitting(false)
@@ -66,128 +66,131 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
   }
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={(e) => !e.open && onClose()}>
+    <Dialog.Root open={isOpen} onOpenChange={(e) => !e.open && onClose()} placement="center" size="md">
       <Portal>
         <Dialog.Backdrop sx={{ zIndex: 10001 }} />
         <Dialog.Positioner sx={{ zIndex: 10002 }}>
-          <Dialog.Content maxW="500px" p={0} sx={{ zIndex: 10002 }}>
-            <Dialog.Header position="relative" px={6} pt={6} pb={4}>
-              <Dialog.Title fontSize="xl" fontWeight="bold">
-                Order Now
-              </Dialog.Title>
+          <Dialog.Content
+            bg="bg"
+            borderRadius="3xl"
+            p={0}
+            sx={{ zIndex: 10002 }}
+            overflow="hidden"
+            border="1px solid"
+            borderColor="bg.muted"
+          >
+            <Dialog.Header bg="bg.subtle" px={8} pt={8} pb={6} borderBottom="1px solid" borderColor="bg.muted">
+              <VStack align="start" spacing={1}>
+                <Dialog.Title fontSize="2xl" fontWeight="900" color="fg">
+                  Quick Order
+                </Dialog.Title>
+                <Text color="fg.muted" fontSize="sm">
+                  Ordering: <Text as="span" color="brandOrange" fontWeight="bold">{product?.name}</Text>
+                </Text>
+              </VStack>
               <Dialog.CloseTrigger asChild>
-                <CloseButton size="sm" position="absolute" right="4" top="4" />
+                <CloseButton size="md" position="absolute" right="6" top="6" borderRadius="full" />
               </Dialog.CloseTrigger>
             </Dialog.Header>
-            <Dialog.Body px={6} py={4}>
-              <form onSubmit={handleSubmit} id="order-form">
-                <Field.Root mb="4">
-                  <Field.Label>NAME *</Field.Label>
-                  <Input
-                    name="name"
-                    type="text"
-                    placeholder="Your name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </Field.Root>
-
-                <Field.Root mb="4">
-                  <Field.Label>PHONE NUMBER *</Field.Label>
-                  <Box
-                    className="phone-input-wrapper"
-                    sx={{
-                      '& .react-tel-input': {
-                        width: '100% !important',
-                      },
-                      '& .form-control': {
-                        width: '100% !important',
-                        height: '40px !important',
-                        fontSize: '16px !important',
-                        borderRadius: '6px !important',
-                        border: '1px solid #CBD5E0 !important',
-                        backgroundColor: 'white !important',
-                      },
-                      '& .form-control:focus': {
-                        borderColor: '#FF6B35 !important',
-                        boxShadow: '0 0 0 1px #FF6B35 !important',
-                        outline: 'none !important'
-                      },
-                      '& .flag-dropdown': {
-                        borderRadius: '6px 0 0 6px !important',
-                        borderRight: '1px solid #CBD5E0 !important',
-                        backgroundColor: '#EDF2F7 !important'
-                      }
-                    }}
-                  >
-                    <PhoneInput
-                      country={'ke'}
-                      value={formData.phone}
-                      onChange={(value) => {
-                        setFormData({
-                          ...formData,
-                          phone: value
-                        })
-                      }}
-                      inputProps={{
-                        name: 'phone',
-                        required: true,
-                      }}
-                      placeholder="Phone number"
+            <Dialog.Body px={8} py={8}>
+              <form onSubmit={handleSubmit} id="quick-order-form">
+                <VStack spacing={6}>
+                  <Field.Root>
+                    <Field.Label fontWeight="bold" color="fg">FULL NAME</Field.Label>
+                    <Input
+                      name="name"
+                      placeholder="Your name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      bg="bg.subtle"
+                      size="lg"
+                      borderRadius="xl"
+                      border="1px solid"
+                      borderColor="bg.muted"
+                      _focus={{ borderColor: 'brandOrange', boxShadow: '0 0 0 1px brandOrange' }}
                     />
-                  </Box>
-                </Field.Root>
+                  </Field.Root>
 
-                <Field.Root mb="4">
-                  <Field.Label>DELIVERY ADDRESS *</Field.Label>
-                  <Textarea
-                    name="deliveryAddress"
-                    placeholder="Street, City, Area, etc."
-                    value={formData.deliveryAddress}
-                    onChange={handleChange}
-                    required
-                    rows={4}
-                  />
-                </Field.Root>
+                  <Field.Root>
+                    <Field.Label fontWeight="bold" color="fg">PHONE NUMBER</Field.Label>
+                    <Box
+                      className="phone-input-wrapper"
+                      sx={{
+                        '& .react-tel-input': { width: '100% !important' },
+                        '& .form-control': {
+                          width: '100% !important',
+                          height: '48px !important',
+                          fontSize: '16px !important',
+                          borderRadius: '12px !important',
+                          border: '1px solid {colors.bg.muted} !important',
+                          backgroundColor: 'bg.subtle !important',
+                          color: 'fg !important',
+                        },
+                        '& .form-control:focus': {
+                          borderColor: 'brandOrange !important',
+                          boxShadow: '0 0 0 1px brandOrange !important',
+                          outline: 'none !important'
+                        },
+                        '& .flag-dropdown': {
+                          borderRadius: '12px 0 0 12px !important',
+                          borderRight: '1px solid {colors.bg.muted} !important',
+                          backgroundColor: 'bg.muted !important'
+                        },
+                        '& .selected-flag': { backgroundColor: 'transparent !important' }
+                      }}
+                    >
+                      <PhoneInput
+                        country={'ke'}
+                        value={formData.phone}
+                        onChange={(value) => setFormData({ ...formData, phone: value })}
+                        inputProps={{ name: 'phone', required: true }}
+                        placeholder="Phone number"
+                      />
+                    </Box>
+                  </Field.Root>
+
+                  <Field.Root>
+                    <Field.Label fontWeight="bold" color="fg">DELIVERY ADDRESS</Field.Label>
+                    <Textarea
+                      name="deliveryAddress"
+                      placeholder="Street, City, Area, etc."
+                      value={formData.deliveryAddress}
+                      onChange={handleChange}
+                      required
+                      bg="bg.subtle"
+                      size="lg"
+                      borderRadius="xl"
+                      rows={3}
+                      border="1px solid"
+                      borderColor="bg.muted"
+                      _focus={{ borderColor: 'brandOrange', boxShadow: '0 0 0 1px brandOrange' }}
+                    />
+                  </Field.Root>
+                </VStack>
               </form>
             </Dialog.Body>
-            <Dialog.Footer px={6} pb={6} pt={4}>
-              <Flex gap="3" w="100%">
-                <Button
-                  type="submit"
-                  form="order-form"
-                  bg="brandOrange"
-                  color="white"
-                  flex="1"
-                  minW="120px"
-                  px="6"
-                  py="3"
-                  fontSize="md"
-                  fontWeight="bold"
-                  loading={isSubmitting}
-                  loadingText="Submitting..."
-                  _hover={{ 
-                    bg: 'brandOrange', 
-                    opacity: 0.9
-                  }}
-                >
-                  ORDER
-                </Button>
-                <Button 
-                  colorPalette="gray" 
-                  variant="outline" 
-                  flex="1"
-                  minW="120px"
-                  px="6"
-                  py="3"
-                  fontSize="md"
-                  fontWeight="medium"
-                  onClick={onClose}
-                >
-                  Cancel
-                </Button>
-              </Flex>
+            <Dialog.Footer px={8} pb={8} pt={0}>
+              <Button
+                type="submit"
+                form="quick-order-form"
+                bg="brandOrange"
+                color="white"
+                w="100%"
+                size="xl"
+                fontWeight="bold"
+                borderRadius="full"
+                boxShadow="0 8px 16px rgba(255, 107, 53, 0.3)"
+                loading={isSubmitting}
+                loadingText="Processing..."
+                _hover={{
+                  bg: 'brandOrange',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 12px 24px rgba(255, 107, 53, 0.4)'
+                }}
+              >
+                PLACE ORDER - {product?.price.toLocaleString()} KES
+              </Button>
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Positioner>
