@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import ProductSection from '../components/ProductSection'
 import WellnessQuiz from '../components/WellnessQuiz'
 import AdvantagesSection from '../components/AdvantagesSection'
+import TestimonialSection from '../components/TestimonialSection'
 import TrustSection from '../components/TrustSection'
 import OrderSection from '../components/OrderSection'
 import Footer from '../components/Footer'
@@ -36,6 +37,7 @@ function Home() {
       <ProductSection searchQuery={searchQuery} />
       <WellnessQuiz />
       <AdvantagesSection />
+      <TestimonialSection />
       <TrustSection />
       <OrderSection />
       <Footer />

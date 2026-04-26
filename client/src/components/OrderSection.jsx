@@ -3,6 +3,7 @@ import { Box, Container, Heading, VStack, HStack, Text, Input, Button, Flex, Tex
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { submitOrderForm } from '../utils/orderService'
+import { TbTruck } from 'react-icons/tb'
 
 const OrderSection = () => {
   const [formData, setFormData] = useState({
@@ -192,25 +193,33 @@ const OrderSection = () => {
                     />
                   </Box>
 
-                  <Button
-                    type="submit"
-                    bg="brandOrange"
-                    color="white"
-                    size="xl"
-                    w="100%"
-                    fontWeight="bold"
-                    borderRadius="full"
-                    boxShadow="0 8px 16px rgba(255, 107, 53, 0.3)"
-                    isLoading={isSubmitting}
-                    loadingText="Processing..."
-                    _hover={{
-                      bg: 'brandOrange',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 12px 24px rgba(255, 107, 53, 0.4)'
-                    }}
-                  >
-                    PLACE ORDER
-                  </Button>
+                  <VStack spacing={4} w="100%">
+                    <Button
+                      type="submit"
+                      bg="brandOrange"
+                      color="white"
+                      size="xl"
+                      w="100%"
+                      fontWeight="bold"
+                      borderRadius="full"
+                      boxShadow="0 8px 16px rgba(255, 107, 53, 0.3)"
+                      isLoading={isSubmitting}
+                      loadingText="Processing..."
+                      _hover={{
+                        bg: 'brandOrange',
+                        transform: 'translateY(-2px)',
+                        boxShadow: '0 12px 24px rgba(255, 107, 53, 0.4)'
+                      }}
+                    >
+                      PLACE ORDER
+                    </Button>
+                    <Flex align="center" justify="center" gap={2} color="#16a34a" w="100%">
+                      <TbTruck size={20} />
+                      <Text fontSize="sm" fontWeight="bold" letterSpacing="wide">
+                        FREE DELIVERY COUNTRYWIDE.
+                      </Text>
+                    </Flex>
+                  </VStack>
                 </VStack>
               </form>
             </Box>

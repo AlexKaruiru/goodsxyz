@@ -3,6 +3,7 @@ import { Dialog, Box, Text, Input, Button, Textarea, Field, CloseButton, Portal,
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { submitOrder } from '../utils/orderService'
+import { TbTruck } from 'react-icons/tb'
 
 const QuickOrderModal = ({ isOpen, onClose, product }) => {
   const [formData, setFormData] = useState({
@@ -171,26 +172,34 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
               </form>
             </Dialog.Body>
             <Dialog.Footer px={8} pb={8} pt={0}>
-              <Button
-                type="submit"
-                form="quick-order-form"
-                bg="brandOrange"
-                color="white"
-                w="100%"
-                size="xl"
-                fontWeight="bold"
-                borderRadius="full"
-                boxShadow="0 8px 16px rgba(255, 107, 53, 0.3)"
-                loading={isSubmitting}
-                loadingText="Processing..."
-                _hover={{
-                  bg: 'brandOrange',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 12px 24px rgba(255, 107, 53, 0.4)'
-                }}
-              >
-                PLACE ORDER - {product?.price.toLocaleString()} KES
-              </Button>
+              <VStack spacing={4} w="100%">
+                <Button
+                  type="submit"
+                  form="quick-order-form"
+                  bg="brandOrange"
+                  color="white"
+                  w="100%"
+                  size="xl"
+                  fontWeight="bold"
+                  borderRadius="full"
+                  boxShadow="0 8px 16px rgba(255, 107, 53, 0.3)"
+                  loading={isSubmitting}
+                  loadingText="Processing..."
+                  _hover={{
+                    bg: 'brandOrange',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 12px 24px rgba(255, 107, 53, 0.4)'
+                  }}
+                >
+                  PLACE ORDER - {product?.price.toLocaleString()} KES
+                </Button>
+                <Flex align="center" justify="center" gap={2} color="#16a34a" w="100%">
+                  <TbTruck size={20} />
+                  <Text fontSize="sm" fontWeight="bold" letterSpacing="wide">
+                    FREE DELIVERY COUNTRYWIDE.
+                  </Text>
+                </Flex>
+              </VStack>
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Positioner>
