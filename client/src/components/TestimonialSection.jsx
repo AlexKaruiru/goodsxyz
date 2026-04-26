@@ -8,13 +8,13 @@ const TestimonialSection = () => {
   const testimonials = [
     {
       name: "Philip K.",
-      role: "Buyer",
+      location: "Nairobi",
       content: "I've been suffering from joint pain for years, and this product has been a game changer. Within just a few days, I noticed a significant reduction in stiffness. Highly recommended!",
       rating: 5
     },
     {
       name: "Charity M.",
-      role: "Buyer",
+      location: "Meru",
       content: "I bought this for my elderly mother who was really struggling with her knees. The fast-acting formula is no joke—her mobility has improved drastically, and she can finally enjoy her morning walks again without discomfort.",
       rating: 4.5
     }
@@ -97,7 +97,7 @@ const TestimonialSection = () => {
                     </Box>
                     <VStack align="start" spacing={0}>
                       <Heading size="sm" color="fg">{testimonial.name}</Heading>
-                      <Text fontSize="sm" color="fg.muted">{testimonial.role}</Text>
+                      <Text fontSize="sm" color="fg.muted">{testimonial.location}</Text>
                     </VStack>
                   </HStack>
                 </VStack>
