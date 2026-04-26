@@ -87,7 +87,7 @@ const OrderSection = () => {
                 <Box bg="brandOrange/10" p={2} borderRadius="md">
                   <Text color="brandOrange" fontWeight="bold">✓</Text>
                 </Box>
-                <Text color="fg.muted">Fast Delivery Across Nairobi</Text>
+                <Text color="fg.muted">Free Delivery Across Kenya</Text>
               </HStack>
               <HStack spacing={4}>
                 <Box bg="brandOrange/10" p={2} borderRadius="md">
