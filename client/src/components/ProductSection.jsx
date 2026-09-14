@@ -102,6 +102,7 @@ const ProductSection = ({ searchQuery = '' }) => {
               fontWeight="bold"
               borderRadius="full"
               boxShadow="lg"
+              animation="pulse 2s infinite"
             >
               -{product.discount}% OFF
             </Badge>
@@ -131,7 +132,7 @@ const ProductSection = ({ searchQuery = '' }) => {
           </Stack>
 
           <Button
-            bg="brandOrange"
+            bgGradient="to-r, brandOrange, #ff8a45"
             color="white"
             size="lg"
             w="100%"
@@ -143,10 +144,11 @@ const ProductSection = ({ searchQuery = '' }) => {
               setIsOrderModalOpen(true)
             }}
             _hover={{
-              bg: 'brandOrange',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 8px 16px rgba(255, 107, 53, 0.4)'
+              bgGradient: 'to-r, #ff8a45, brandOrange',
+              transform: 'translateY(-3px)',
+              boxShadow: '0 10px 25px rgba(255, 107, 53, 0.4)'
             }}
+            transition="all 0.3s ease"
           >
             ORDER NOW
           </Button>

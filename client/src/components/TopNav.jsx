@@ -123,8 +123,8 @@ const TopNav = ({ onSearch }) => {
       top={0}
       left={0}
       right={0}
-      bg="bg/80"
-      backdropFilter="blur(10px)"
+      bg={{ base: 'rgba(255, 255, 255, 0.85)', _dark: 'rgba(15, 23, 42, 0.85)' }}
+      backdropFilter="blur(12px)"
       boxShadow="sm"
       zIndex={10000}
       display={{ base: 'none', md: 'block' }}

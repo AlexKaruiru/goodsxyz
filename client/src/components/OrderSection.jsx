@@ -196,7 +196,7 @@ const OrderSection = () => {
                   <VStack spacing={4} w="100%">
                     <Button
                       type="submit"
-                      bg="brandOrange"
+                      bgGradient="to-r, brandOrange, #ff8a45"
                       color="white"
                       size="xl"
                       w="100%"
@@ -206,10 +206,11 @@ const OrderSection = () => {
                       isLoading={isSubmitting}
                       loadingText="Processing..."
                       _hover={{
-                        bg: 'brandOrange',
-                        transform: 'translateY(-2px)',
-                        boxShadow: '0 12px 24px rgba(255, 107, 53, 0.4)'
+                        bgGradient: 'to-r, #ff8a45, brandOrange',
+                        transform: 'translateY(-3px)',
+                        boxShadow: '0 12px 28px rgba(255, 107, 53, 0.5)'
                       }}
+                      transition="all 0.3s ease"
                     >
                       PLACE ORDER
                     </Button>
