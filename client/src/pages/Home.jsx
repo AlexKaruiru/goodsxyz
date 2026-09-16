@@ -15,6 +15,11 @@ function Home() {
 
   const handleSearch = (query) => {
     setSearchQuery(query)
+
+    // TopNav's search effect also fires once on mount with an empty query (not a real search),
+    // so only auto-scroll when the visitor has actually typed something.
+    if (!query || !query.trim()) return
+
     // Scroll to products section
     setTimeout(() => {
       const element = document.querySelector('#products')

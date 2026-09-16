@@ -39,8 +39,8 @@ const TestimonialSection = () => {
   return (
     <Box as="section" py={{ base: 16, md: 24 }} bg="bg.subtle" id="testimonials">
       <Container maxW="1200px" px={6} mx="auto">
-        <VStack spacing={16}>
-          <VStack spacing={4} align="center">
+        <VStack gap={16}>
+          <VStack gap={4} align="center">
             <Text
               fontSize="sm"
               fontWeight="extrabold"
@@ -50,7 +50,7 @@ const TestimonialSection = () => {
             >
               Reviews
             </Text>
-            <Heading size="2xl" textAlign="center" color="fg">
+            <Heading as="h2" size="3xl" textAlign="center" color="fg">
               What Our Customers Say
             </Heading>
           </VStack>
@@ -71,9 +71,9 @@ const TestimonialSection = () => {
                 whileHover={{ y: -5, borderColor: 'brandOrange/30' }}
                 boxShadow="sm"
               >
-                <VStack spacing={6} align="start" h="100%" justify="space-between">
-                  <VStack align="start" spacing={4}>
-                    <HStack spacing={1}>
+                <VStack gap={6} align="start" h="100%" justify="space-between">
+                  <VStack align="start" gap={4}>
+                    <HStack gap={1}>
                       {renderStars(testimonial.rating)}
                     </HStack>
                     <Text fontSize="lg" color="fg" fontStyle="italic" lineHeight="tall">
@@ -81,7 +81,7 @@ const TestimonialSection = () => {
                     </Text>
                   </VStack>
                   
-                  <HStack spacing={4}>
+                  <HStack gap={4}>
                     <Box 
                       w="40px" 
                       h="40px" 
@@ -95,8 +95,8 @@ const TestimonialSection = () => {
                     >
                       {testimonial.name.charAt(0)}
                     </Box>
-                    <VStack align="start" spacing={0}>
-                      <Heading size="sm" color="fg">{testimonial.name}</Heading>
+                    <VStack align="start" gap={0}>
+                      <Heading as="h3" size="sm" color="fg">{testimonial.name}</Heading>
                       <Text fontSize="sm" color="fg.muted">{testimonial.location}</Text>
                     </VStack>
                   </HStack>

@@ -6,16 +6,13 @@ import { getAllProducts, searchProducts, getProductSlug } from '../utils/product
 import CountdownTimer from './CountdownTimer'
 import QuickOrderModal from './QuickOrderModal'
 import wormwoodImage from '../images/wormwood.jpg'
-import biotinImage from '../images/biotin.jpg'
 
 const MotionBox = motion.create(Box)
 
-// Map product image names to actual imports
+// Map product image names to actual imports (only wormwood.jpg is a real product image today -
+// biotin.jpg was a ~180KB unused import shipped for a product that doesn't exist in products.json)
 const imageMap = {
   'wormwood.jpg': wormwoodImage,
-  'biotin.jpg': biotinImage,
-  'product1.webp': wormwoodImage, // fallback
-  'product2.webp': biotinImage // fallback
 }
 
 const ProductSection = ({ searchQuery = '' }) => {
@@ -25,12 +22,11 @@ const ProductSection = ({ searchQuery = '' }) => {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
 
-  const benefits = [
+  // Fallback only for a product that has no benefits of its own in products.json
+  const fallbackBenefits = [
     'Relieves pain',
     'Stimulates cartilage regeneration',
-    'Alleviates muscle hypertension',
-    'Lessens swelling',
-    'Eliminates inflammations'
+    'Alleviates muscle hypertension'
   ]
 
   useEffect(() => {
@@ -75,7 +71,7 @@ const ProductSection = ({ searchQuery = '' }) => {
       border="1px solid"
       borderColor="bg.muted"
     >
-      <VStack spacing={4} align="stretch" flex="1">
+      <VStack gap={4} align="stretch" flex="1">
         <Box position="relative" w="100%" display="flex" justifyContent="center" alignItems="center">
           <Box position="relative" w="100%" pt="100%" borderRadius="xl" overflow="hidden" bg="bg.muted">
             <Image
@@ -109,10 +105,10 @@ const ProductSection = ({ searchQuery = '' }) => {
           </Box>
         </Box>
 
-        <VStack spacing={2} align="center" textAlign="center">
-          <Heading size="md" color="fg">{product.name}</Heading>
-          <VStack spacing={1} align="center">
-            {benefits.slice(0, 3).map((benefit, index) => (
+        <VStack gap={2} align="center" textAlign="center">
+          <Heading as="h3" size="md" color="fg" fontWeight="900">{product.name}</Heading>
+          <VStack gap={1} align="center">
+            {(product.benefits?.length ? product.benefits : fallbackBenefits).slice(0, 3).map((benefit, index) => (
               <Flex key={index} align="center">
                 <Box as="span" mr="2" color="brandOrange" fontSize="sm">●</Box>
                 <Text fontSize="xs" color="fg.muted" noOfLines={1}>{benefit}</Text>
@@ -159,11 +155,11 @@ const ProductSection = ({ searchQuery = '' }) => {
 
   return (
     <Box as="section" pt={{ base: 8, md: 12 }} pb={{ base: 16, md: 24 }} bg="bg" id="products">
-      <Container maxW="1400px" px={6} mx="auto">
-        <VStack spacing={16} align="stretch" w="100%">
+      <Container maxW="1200px" px={6} mx="auto">
+        <VStack gap={16} align="stretch" w="100%">
           {/* Header Area */}
-          <VStack spacing={8} align="center" textAlign="center" w="100%">
-            <VStack spacing={4}>
+          <VStack gap={8} align="center" textAlign="center" w="100%">
+            <VStack gap={4}>
               <Text
                 fontSize="sm"
                 fontWeight="extrabold"
@@ -173,7 +169,7 @@ const ProductSection = ({ searchQuery = '' }) => {
               >
                 Our Collection
               </Text>
-              <Heading size="3xl" color="fg">
+              <Heading as="h2" size="3xl" color="fg">
                 Wellness Essentials
               </Heading>
             </VStack>

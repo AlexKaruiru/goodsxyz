@@ -26,12 +26,12 @@ const TrustSection = () => {
     return (
         <Box as="section" py={{ base: 16, md: 24 }} bg="bg">
             <Container maxW="1200px" px={6} mx="auto">
-                <VStack spacing={20}>
+                <VStack gap={20}>
 
 
                     {/* How to Order */}
-                    <VStack spacing={12} w="100%">
-                        <VStack spacing={4}>
+                    <VStack gap={12} w="100%">
+                        <VStack gap={4}>
                             <Text
                                 fontSize="sm"
                                 fontWeight="extrabold"
@@ -41,7 +41,7 @@ const TrustSection = () => {
                             >
                                 The Process
                             </Text>
-                            <Heading size="2xl" textAlign="center" color="fg">
+                            <Heading as="h2" size="3xl" textAlign="center" color="fg">
                                 How to Get Your <Text as="span" color="brandOrange">Order</Text>
                             </Heading>
                         </VStack>
@@ -50,7 +50,7 @@ const TrustSection = () => {
                             {steps.map((step, idx) => (
                                 <VStack
                                     key={idx}
-                                    spacing={6}
+                                    gap={6}
                                     align="center"
                                     textAlign="center"
                                     p={8}
@@ -70,8 +70,8 @@ const TrustSection = () => {
                                     >
                                         <Icon as={step.icon} boxSize={8} />
                                     </Box>
-                                    <VStack spacing={3}>
-                                        <Heading size="md" color="fg">{step.title}</Heading>
+                                    <VStack gap={3}>
+                                        <Heading as="h3" size="md" color="fg" fontWeight="900">{step.title}</Heading>
                                         <Text color="fg.muted" lineHeight="tall">{step.text}</Text>
                                     </VStack>
                                 </VStack>

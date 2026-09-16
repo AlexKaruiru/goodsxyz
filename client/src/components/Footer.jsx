@@ -1,11 +1,25 @@
-import { Box, Container, Text, Link, HStack, VStack, Separator } from '@chakra-ui/react'
+import { useState } from 'react'
+import { Box, Container, Text, HStack, VStack } from '@chakra-ui/react'
+import { TbInfoCircle, TbFileText, TbShieldCheck, TbCookie } from 'react-icons/tb'
+import FooterInfoDialog from './FooterInfoDialog'
+import { ABOUT_US, TERMS_OF_SERVICE, PRIVACY_POLICY, COOKIES_POLICY } from '../utils/footerContent'
+
+const FOOTER_LINKS = [
+  { key: 'terms', label: 'Terms & Conditions', icon: TbFileText, content: TERMS_OF_SERVICE, eyebrow: 'Legal' },
+  { key: 'privacy', label: 'Privacy Policy', icon: TbShieldCheck, content: PRIVACY_POLICY, eyebrow: 'Legal' },
+  { key: 'cookies', label: 'Cookie Policy', icon: TbCookie, content: COOKIES_POLICY, eyebrow: 'Legal' },
+  { key: 'about', label: 'About Us', icon: TbInfoCircle, content: ABOUT_US, eyebrow: 'Company' },
+]
 
 const Footer = () => {
+  const [openKey, setOpenKey] = useState(null)
+  const activeLink = FOOTER_LINKS.find((l) => l.key === openKey)
+
   return (
     <Box as="footer" bg="bg" py={12} borderTop="1px solid" borderColor="bg.muted">
       <Container maxW="1200px" px={6} mx="auto">
-        <VStack spacing={8} align="center">
-          <VStack spacing={4} align="center">
+        <VStack gap={8} align="center">
+          <VStack gap={4} align="center">
             <Box fontWeight="900" fontSize="2xl" color="brandOrange">
               SupleeHub
             </Box>
@@ -14,14 +28,24 @@ const Footer = () => {
             </Text>
           </VStack>
 
-          <HStack spacing={6} fontSize="sm" color="fg.muted" flexWrap="wrap" justify="center">
-            <Link href="#" _hover={{ color: 'brandOrange' }}>Terms & Conditions</Link>
-            <Link href="#" _hover={{ color: 'brandOrange' }}>Privacy Policy</Link>
-            <Link href="#" _hover={{ color: 'brandOrange' }}>Cookie Policy</Link>
-            <Link href="#" _hover={{ color: 'brandOrange' }}>About Us</Link>
+          <HStack gap={6} fontSize="sm" color="fg.muted" flexWrap="wrap" justify="center">
+            {FOOTER_LINKS.map((link) => (
+              <Text
+                key={link.key}
+                as="button"
+                type="button"
+                onClick={() => setOpenKey(link.key)}
+                cursor="pointer"
+                color="fg.muted"
+                _hover={{ color: 'brandOrange' }}
+                transition="color 0.2s"
+              >
+                {link.label}
+              </Text>
+            ))}
           </HStack>
 
-          <VStack spacing={4} w="100%">
+          <VStack gap={4} w="100%">
             <Box w="100%" h="1px" bg="bg.muted" />
             <Text fontSize="xs" color="fg.subtle" textAlign="center" maxW="800px">
               &copy; {new Date().getFullYear()} SupleeHub. All rights reserved.
@@ -30,9 +54,16 @@ const Footer = () => {
           </VStack>
         </VStack>
       </Container>
+
+      <FooterInfoDialog
+        isOpen={!!activeLink}
+        onClose={() => setOpenKey(null)}
+        icon={activeLink?.icon}
+        eyebrow={activeLink?.eyebrow}
+        content={activeLink?.content}
+      />
     </Box>
   )
 }
 
 export default Footer
-

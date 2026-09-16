@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Container, Heading, Text, VStack, Button, HStack, Progress, Stack, Icon } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, VStack, Button, HStack } from '@chakra-ui/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TbArrowRight, TbChevronRight, TbCheck } from 'react-icons/tb'
 
@@ -37,8 +37,8 @@ const WellnessQuiz = () => {
     return (
         <Box as="section" py={{ base: 16, md: 24 }} bg="bg">
             <Container maxW="800px" px={6} mx="auto">
-                <VStack spacing={8} align="stretch">
-                    <VStack spacing={4} align="center">
+                <VStack gap={8} align="stretch">
+                    <VStack gap={4} align="center">
                         <Text
                             fontSize="sm"
                             fontWeight="extrabold"
@@ -48,11 +48,11 @@ const WellnessQuiz = () => {
                         >
                             Diagnostic Survey
                         </Text>
-                        <Heading size="2xl" textAlign="center" color="fg">
+                        <Heading as="h2" size="3xl" textAlign="center" color="fg">
                             Quick Wellness <Text as="span" color="brandOrange">Analysis</Text>
                         </Heading>
                         {!isFinished && (
-                            <Text color="fg.muted" textAlign="center">
+                            <Text fontSize="lg" color="fg.muted" textAlign="center">
                                 Answer {questions.length} simple questions to find the best solution for your mobility.
                             </Text>
                         )}
@@ -77,7 +77,7 @@ const WellnessQuiz = () => {
                                     exit={{ opacity: 0, x: -20 }}
                                     transition={{ duration: 0.4 }}
                                 >
-                                    <VStack align="stretch" spacing={8}>
+                                    <VStack align="stretch" gap={8}>
                                         <HStack justify="space-between" align="center">
                                             <Text fontWeight="bold" color="brandOrange" fontSize="sm">
                                                 QUESTION {step + 1} OF {questions.length}
@@ -95,11 +95,11 @@ const WellnessQuiz = () => {
                                             />
                                         </Box>
 
-                                        <Heading size="lg" color="fg" lineHeight="tall" textAlign="center">
+                                        <Heading as="h3" size="lg" color="fg" lineHeight="tall" textAlign="center">
                                             {questions[step].title}
                                         </Heading>
 
-                                        <VStack align="stretch" spacing={4}>
+                                        <VStack align="stretch" gap={4}>
                                             {questions[step].variants.map((variant, idx) => (
                                                 <Button
                                                     key={idx}
@@ -112,12 +112,12 @@ const WellnessQuiz = () => {
                                                     borderColor="bg.muted"
                                                     _hover={{ borderColor: 'brandOrange', bg: 'brandOrange/5' }}
                                                     onClick={handleNext}
-                                                    rightIcon={<TbChevronRight />}
                                                     textAlign="center"
                                                     whiteSpace="normal"
                                                     height="auto"
                                                 >
                                                     <Text color="fg" fontWeight="bold">{variant}</Text>
+                                                    <TbChevronRight />
                                                 </Button>
                                             ))}
                                         </VStack>
@@ -130,7 +130,7 @@ const WellnessQuiz = () => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.5 }}
                                 >
-                                    <VStack align="center" spacing={8} py={4}>
+                                    <VStack align="center" gap={8} py={4}>
                                         <Box
                                             w="80px"
                                             h="80px"
@@ -143,8 +143,8 @@ const WellnessQuiz = () => {
                                         >
                                             <TbCheck size={40} />
                                         </Box>
-                                        <VStack spacing={4} textAlign="center">
-                                            <Heading size="xl" color="fg">Analysis Complete</Heading>
+                                        <VStack gap={4} textAlign="center">
+                                            <Heading as="h3" size="xl" color="fg">Analysis Complete</Heading>
                                             <Text fontSize="lg" color="fg.muted">
                                                 Based on your answers, an injury or bruise can happen anytime - and it's easy to fix them fast! We recommend joining thousands who use <Text as="span" fontWeight="bold" color="brandOrange">SupleeHub</Text> solutions.
                                             </Text>
@@ -158,7 +158,7 @@ const WellnessQuiz = () => {
                                             color="white"
                                             px={12}
                                             borderRadius="full"
-                                            rightIcon={<TbArrowRight />}
+                                            fontWeight="bold"
                                             onClick={() => {
                                                 const element = document.querySelector('#order')
                                                 if (element) {
@@ -168,6 +168,7 @@ const WellnessQuiz = () => {
                                             _hover={{ transform: 'translateY(-2px)', boxShadow: 'xl' }}
                                         >
                                             CLAIM DISCOUNT NOW
+                                            <TbArrowRight />
                                         </Button>
                                     </VStack>
                                 </MotionBox>

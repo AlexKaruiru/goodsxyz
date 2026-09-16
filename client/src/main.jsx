@@ -5,6 +5,7 @@ import { ColorModeProvider } from './components/ui/color-mode'
 import './index.css'
 import App from './App.jsx'
 import { initEmailJS } from './utils/orderService'
+import { headingFontFamily, bodyFontFamily } from './config/fonts'
 
 const customConfig = defineConfig({
   theme: {
@@ -36,8 +37,8 @@ const customConfig = defineConfig({
         },
       },
       fonts: {
-        body: { value: '"Inter", sans-serif' },
-        heading: { value: '"Montserrat", sans-serif' },
+        body: { value: bodyFontFamily },
+        heading: { value: headingFontFamily },
       },
     },
     semanticTokens: {

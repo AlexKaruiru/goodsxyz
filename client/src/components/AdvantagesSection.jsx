@@ -35,8 +35,8 @@ const AdvantagesSection = () => {
   return (
     <Box as="section" py={{ base: 16, md: 24 }} bg="bg" position="relative" id="advantages">
       <Container maxW="1200px" px={6} mx="auto">
-        <VStack spacing={16}>
-          <VStack spacing={4} align="center">
+        <VStack gap={16}>
+          <VStack gap={4} align="center">
             <Text
               fontSize="sm"
               fontWeight="extrabold"
@@ -46,7 +46,7 @@ const AdvantagesSection = () => {
             >
               Why Choose Us
             </Text>
-            <Heading size="3xl" textAlign="center" color="fg">
+            <Heading as="h2" size="3xl" textAlign="center" color="fg">
               The SupleeHub Advantage
             </Heading>
           </VStack>
@@ -66,7 +66,7 @@ const AdvantagesSection = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -5, borderColor: 'brandOrange/30' }}
               >
-                <VStack spacing={6} align="start">
+                <VStack gap={6} align="start">
                   <Box
                     w="50px"
                     h="50px"
@@ -79,8 +79,8 @@ const AdvantagesSection = () => {
                   >
                     <TbCheck size={24} />
                   </Box>
-                  <VStack align="start" spacing={3}>
-                    <Heading size="md" color="fg" fontWeight="900">
+                  <VStack align="start" gap={3}>
+                    <Heading as="h3" size="md" color="fg" fontWeight="900">
                       {advantage.title}
                     </Heading>
                     <Text fontSize="md" color="fg.muted" lineHeight="tall">

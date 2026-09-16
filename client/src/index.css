@@ -13,9 +13,7 @@ html, body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
-  font-family: "Open Sans", sans-serif;
-  font-size: 20px;
-  color: rgb(75, 75, 75);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 #root {
@@ -67,12 +65,14 @@ html, body {
 
 .phone-input-wrapper .form-control {
   width: 100% !important;
-  height: 40px !important;
+  height: 48px !important;
   font-size: 16px !important;
-  border-radius: 6px !important;
+  border-radius: 12px !important;
   border: 1px solid #CBD5E0 !important;
   background-color: white !important;
+  color: rgb(30, 30, 30) !important;
   padding-left: 60px !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .phone-input-wrapper .form-control:focus {
@@ -82,9 +82,35 @@ html, body {
 }
 
 .phone-input-wrapper .flag-dropdown {
-  border-radius: 6px 0 0 6px !important;
+  border-radius: 12px 0 0 12px !important;
   border-right: 1px solid #CBD5E0 !important;
   background-color: #EDF2F7 !important;
+}
+
+/* Dark mode variants (next-themes sets class="dark" on <html>) */
+html.dark .phone-input-wrapper .form-control {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .phone-input-wrapper .flag-dropdown {
+  background-color: #334155 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .phone-input-wrapper .flag-dropdown .country-list {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .phone-input-wrapper .flag-dropdown .country-list .country:hover,
+html.dark .phone-input-wrapper .flag-dropdown .country-list .country.highlight {
+  background-color: #334155 !important;
+}
+
+html.dark .phone-input-wrapper .flag-dropdown .selected-flag {
+  background-color: transparent !important;
 }
 
 @keyframes pulse {

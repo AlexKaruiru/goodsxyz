@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useState, useId } from 'react'
 import { Dialog, Box, Text, Input, Button, Textarea, Field, CloseButton, Portal, Flex, VStack } from '@chakra-ui/react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { submitOrder } from '../utils/orderService'
 import { TbTruck } from 'react-icons/tb'
+import { toaster } from './ui/toaster'
+import { hasValidPhoneDigits } from '../utils/phone'
 
 const QuickOrderModal = ({ isOpen, onClose, product }) => {
   const [formData, setFormData] = useState({
@@ -12,13 +14,21 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
     deliveryAddress: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  // react-phone-input-2 manages its own <input> id, ignoring Field.Root's auto-generated one,
+  // so the label needs an explicit id passed straight into the phone input to actually link up.
+  const phoneFieldId = useId()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     // Validate: all fields are required
-    if (!formData.name || !formData.phone || !formData.deliveryAddress) {
-      alert('Please fill in all fields: Name, Phone Number, and Delivery Address')
+    if (!formData.name || !hasValidPhoneDigits(formData.phone) || !formData.deliveryAddress) {
+      toaster.create({
+        title: 'Missing information',
+        description: 'Please fill in your name, a valid phone number, and delivery address.',
+        type: 'warning',
+        duration: 4000,
+      })
       return
     }
 
@@ -35,7 +45,12 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
         price: product?.price
       })
 
-      alert('Order submitted successfully! We have received your order. We will contact you shortly to confirm.')
+      toaster.create({
+        title: 'Order submitted!',
+        description: 'We have received your order. We will contact you shortly to confirm.',
+        type: 'success',
+        duration: 5000,
+      })
 
       // Reset form and close modal
       setFormData({
@@ -49,11 +64,14 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
       const errorMessage = error.text || error.message || 'Please try again later.'
       const isRecipientError = errorMessage.includes('recipients address is empty')
 
-      const alertMessage = isRecipientError
-        ? 'Email Configuration Error: Please configure recipient emails in your EmailJS template settings.'
-        : `Error submitting order: ${errorMessage}`
-
-      alert(alertMessage)
+      toaster.create({
+        title: isRecipientError ? 'Email configuration error' : 'Order submission failed',
+        description: isRecipientError
+          ? 'Please configure recipient emails in your EmailJS template settings.'
+          : errorMessage,
+        type: 'error',
+        duration: 6000,
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -69,19 +87,18 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={(e) => !e.open && onClose()} placement="center" size="md">
       <Portal>
-        <Dialog.Backdrop sx={{ zIndex: 10001 }} />
-        <Dialog.Positioner sx={{ zIndex: 10002 }}>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
           <Dialog.Content
             bg="bg"
             borderRadius="3xl"
             p={0}
-            sx={{ zIndex: 10002 }}
             overflow="hidden"
             border="1px solid"
             borderColor="bg.muted"
           >
             <Dialog.Header bg="bg.subtle" px={8} pt={8} pb={6} borderBottom="1px solid" borderColor="bg.muted">
-              <VStack align="start" spacing={1}>
+              <VStack align="start" gap={1}>
                 <Dialog.Title fontSize="2xl" fontWeight="900" color="fg">
                   Quick Order
                 </Dialog.Title>
@@ -95,7 +112,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
             </Dialog.Header>
             <Dialog.Body px={8} py={8}>
               <form onSubmit={handleSubmit} id="quick-order-form">
-                <VStack spacing={6}>
+                <VStack gap={6}>
                   <Field.Root>
                     <Field.Label fontWeight="bold" color="fg">FULL NAME</Field.Label>
                     <Input
@@ -114,38 +131,13 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
                   </Field.Root>
 
                   <Field.Root>
-                    <Field.Label fontWeight="bold" color="fg">PHONE NUMBER</Field.Label>
-                    <Box
-                      className="phone-input-wrapper"
-                      sx={{
-                        '& .react-tel-input': { width: '100% !important' },
-                        '& .form-control': {
-                          width: '100% !important',
-                          height: '48px !important',
-                          fontSize: '16px !important',
-                          borderRadius: '12px !important',
-                          border: '1px solid {colors.bg.muted} !important',
-                          backgroundColor: 'bg.subtle !important',
-                          color: 'fg !important',
-                        },
-                        '& .form-control:focus': {
-                          borderColor: 'brandOrange !important',
-                          boxShadow: '0 0 0 1px brandOrange !important',
-                          outline: 'none !important'
-                        },
-                        '& .flag-dropdown': {
-                          borderRadius: '12px 0 0 12px !important',
-                          borderRight: '1px solid {colors.bg.muted} !important',
-                          backgroundColor: 'bg.muted !important'
-                        },
-                        '& .selected-flag': { backgroundColor: 'transparent !important' }
-                      }}
-                    >
+                    <Field.Label htmlFor={phoneFieldId} fontWeight="bold" color="fg">PHONE NUMBER</Field.Label>
+                    <Box className="phone-input-wrapper">
                       <PhoneInput
                         country={'ke'}
                         value={formData.phone}
                         onChange={(value) => setFormData({ ...formData, phone: value })}
-                        inputProps={{ name: 'phone', required: true }}
+                        inputProps={{ name: 'phone', required: true, id: phoneFieldId }}
                         placeholder="Phone number"
                       />
                     </Box>
@@ -172,7 +164,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
               </form>
             </Dialog.Body>
             <Dialog.Footer px={8} pb={8} pt={0}>
-              <VStack spacing={4} w="100%">
+              <VStack gap={4} w="100%">
                 <Button
                   type="submit"
                   form="quick-order-form"

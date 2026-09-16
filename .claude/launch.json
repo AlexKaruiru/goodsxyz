@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "goodsxyz-client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "C:\\Users\\alex.ndegwa\\Desktop\\Clearing\\goodsxyz\\client"],
+      "port": 3000
+    }
+  ]
+}

@@ -44,7 +44,7 @@ const Header = () => {
 
       <Container maxW="1200px" px={{ base: 6, md: 6 }} pt={{ base: 20, md: 32 }} pb={{ base: 10, md: 12 }} mx="auto">
         <Flex direction="column" align="center" justify="center" gap={12} textAlign="center">
-          <VStack spacing={8} align="center" flex="1" zIndex={1}>
+          <VStack gap={8} align="center" flex="1" zIndex={1}>
             <MotionBox
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

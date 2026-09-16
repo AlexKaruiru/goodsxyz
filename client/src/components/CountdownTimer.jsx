@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Box, HStack, Text, Flex } from '@chakra-ui/react'
+import { Box, HStack, VStack, Text } from '@chakra-ui/react'
 
 const CountdownTimer = () => {
   const [hours, setHours] = useState(0)
@@ -32,7 +32,7 @@ const CountdownTimer = () => {
   }, [])
 
   const TimeUnit = ({ value, label }) => (
-    <VStack spacing={0}>
+    <VStack gap={1}>
       <Box
         bg="brandOrange"
         color="white"
@@ -55,11 +55,11 @@ const CountdownTimer = () => {
   )
 
   return (
-    <HStack spacing={6}>
+    <HStack gap={6}>
       <Text fontSize="sm" fontWeight="bold" color="fg.muted" display={{ base: 'none', sm: 'block' }}>
         OFFER EXPIRES IN:
       </Text>
-      <HStack spacing={3}>
+      <HStack gap={3}>
         <TimeUnit value={hours} label="Hrs" />
         <Text fontSize="2xl" fontWeight="900" color="brandOrange">:</Text>
         <TimeUnit value={minutes} label="Min" />
@@ -70,6 +70,5 @@ const CountdownTimer = () => {
   )
 }
 
-import { VStack } from '@chakra-ui/react'
 export default CountdownTimer
 

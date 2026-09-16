@@ -4,7 +4,6 @@ import { Box, Container, Flex, VStack, HStack, Stack, Text, Button, Badge, Headi
 import { motion } from 'framer-motion'
 import { TbArrowLeft, TbCheck } from 'react-icons/tb'
 import wormwoodImage from '../images/wormwood.jpg'
-import biotinImage from '../images/biotin.jpg'
 import TopNav from '../components/TopNav'
 import MobileNav from '../components/MobileNav'
 import Footer from '../components/Footer'
@@ -17,9 +16,6 @@ const MotionImage = motion.create(Image)
 
 const imageMap = {
   'wormwood.jpg': wormwoodImage,
-  'biotin.jpg': biotinImage,
-  'product1.webp': wormwoodImage,
-  'product2.webp': biotinImage
 }
 
 const ProductDetail = () => {
@@ -69,8 +65,8 @@ const ProductDetail = () => {
         <TopNav />
         <Container maxW="1200px" py={20} textAlign="center">
           <Text color="red.500" fontSize="xl" mb={8}>{error || 'Product not found'}</Text>
-          <Button onClick={() => navigate('/')} leftIcon={<TbArrowLeft />}>
-            Back to Home
+          <Button onClick={() => navigate('/')}>
+            <TbArrowLeft /> Back to Home
           </Button>
         </Container>
       </Box>
@@ -144,12 +140,12 @@ const ProductDetail = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <VStack spacing={8} align="stretch">
+              <VStack gap={8} align="stretch">
                 <Box>
                   <Badge colorPalette="orange" variant="subtle" mb={4} p={2} borderRadius="md" fontWeight="bold">
                     TRUSTED WELLNESS
                   </Badge>
-                  <Heading size="4xl" color="fg" mb={6} lineHeight="tight">
+                  <Heading as="h1" size="4xl" color="fg" mb={6} lineHeight="tight">
                     {product.name}
                   </Heading>
                   <Text fontSize="xl" color="fg.muted" lineHeight="tall">
@@ -158,11 +154,11 @@ const ProductDetail = () => {
                 </Box>
 
                 <Box bg="bg.subtle" p={{ base: 6, md: 8 }} borderRadius="2xl" border="1px solid" borderColor="bg.muted">
-                  <VStack align="stretch" spacing={6}>
+                  <VStack align="stretch" gap={6}>
                     <HStack justify="space-between" wrap="wrap" gap={4}>
-                      <VStack align="start" spacing={1}>
+                      <VStack align="start" gap={1}>
                         <Text fontSize="sm" color="fg.subtle" fontWeight="bold" letterSpacing="widest">PRICE</Text>
-                        <Stack direction={{ base: 'column', sm: 'row' }} align={{ base: 'start', sm: 'baseline' }} spacing={{ base: 2, sm: 4 }}>
+                        <Stack direction={{ base: 'column', sm: 'row' }} align={{ base: 'start', sm: 'baseline' }} gap={{ base: 2, sm: 4 }}>
                           <Text fontSize={{ base: "4xl", md: "5xl" }} fontWeight="900" color="brandOrange" lineHeight="1">
                             {product.price.toLocaleString()} <Text as="span" fontSize={{ base: "xl", md: "2xl" }}>KES</Text>
                           </Text>
@@ -199,12 +195,12 @@ const ProductDetail = () => {
                 </Box>
 
                 <Box pt={4}>
-                  <Heading size="md" mb={6} color="fg" fontWeight="900">
+                  <Heading as="h2" size="2xl" mb={6} color="fg" fontWeight="900">
                     Why You'll Love It
                   </Heading>
                   <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
                     {product.benefits.map((benefit, index) => (
-                      <HStack key={index} spacing={4} p={4} bg="bg.subtle" borderRadius="xl">
+                      <HStack key={index} gap={4} p={4} bg="bg.subtle" borderRadius="xl">
                         <Box bg="brandOrange/20" p={2} borderRadius="lg">
                           <TbCheck color="brandOrange" />
                         </Box>
@@ -216,9 +212,18 @@ const ProductDetail = () => {
 
                 {/* New "How it works" section */}
                 <Box pt={12}>
-                  <VStack spacing={8} align="stretch">
-                    <VStack align="start" spacing={2}>
-                      <Heading size="2xl" color="brandOrange" fontWeight="900">
+                  <VStack gap={8} align="stretch">
+                    <VStack align="start" gap={2}>
+                      <Text
+                        fontSize="sm"
+                        fontWeight="extrabold"
+                        color="brandOrange"
+                        letterSpacing="widest"
+                        textTransform="uppercase"
+                      >
+                        The Science
+                      </Text>
+                      <Heading as="h2" size="2xl" color="fg" fontWeight="900">
                         HOW {product.name} WORKS
                       </Heading>
                       <Text fontSize="lg" color="fg.muted">
@@ -228,7 +233,7 @@ const ProductDetail = () => {
 
                     <SimpleGrid columns={{ base: 1, md: 2 }} gap={8}>
                       <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
-                        <Heading size="md" color="brandOrange" mb={3} fontWeight="900">
+                        <Heading as="h3" size="md" color="brandOrange" mb={3} fontWeight="900">
                           CARTILAGE REGENERATION AND JOINT STRENGTHENING
                         </Heading>
                         <Text color="fg.muted">
@@ -237,7 +242,7 @@ const ProductDetail = () => {
                       </VStack>
 
                       <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
-                        <Heading size="md" color="brandOrange" mb={3} fontWeight="900">
+                        <Heading as="h3" size="md" color="brandOrange" mb={3} fontWeight="900">
                           REDUCTION OF INFLAMMATION AND PAIN
                         </Heading>
                         <Text color="fg.muted">
@@ -246,7 +251,7 @@ const ProductDetail = () => {
                       </VStack>
 
                       <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
-                        <Heading size="md" color="brandOrange" mb={3} fontWeight="900">
+                        <Heading as="h3" size="md" color="brandOrange" mb={3} fontWeight="900">
                           LUBRICATION AND PROTECTION AGAINST WEAR
                         </Heading>
                         <Text color="fg.muted">
@@ -255,7 +260,7 @@ const ProductDetail = () => {
                       </VStack>
 
                       <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
-                        <Heading size="md" color="brandOrange" mb={3} fontWeight="900">
+                        <Heading as="h3" size="md" color="brandOrange" mb={3} fontWeight="900">
                           BONE STRENGTHENING AND INJURY PREVENTION
                         </Heading>
                         <Text color="fg.muted">

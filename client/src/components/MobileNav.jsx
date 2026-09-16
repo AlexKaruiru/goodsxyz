@@ -133,7 +133,7 @@ const MobileNav = () => {
         >
           SupleeHub
         </Box>
-        <HStack spacing={2}>
+        <HStack gap={2}>
           <ColorModeButton />
           <IconButton
             variant="ghost"
@@ -157,7 +157,7 @@ const MobileNav = () => {
                   SupleeHub
                 </Text>
                 <Drawer.CloseTrigger asChild>
-                  <IconButton variant="ghost" size="lg" borderRadius="full" color="fg">
+                  <IconButton variant="ghost" size="lg" borderRadius="full" color="fg" aria-label="Close menu">
                     <TbX size={32} />
                   </IconButton>
                 </Drawer.CloseTrigger>
@@ -166,7 +166,7 @@ const MobileNav = () => {
 
             <Drawer.Body py={10} px={6}>
               <Flex direction="column" justify="space-between" h="100%">
-                <VStack spacing={6} align="start" w="100%">
+                <VStack gap={6} align="start" w="100%">
                   {menuItems.map((item, index) => (
                     <MotionBox
                       key={index}
@@ -177,7 +177,7 @@ const MobileNav = () => {
                       cursor="pointer"
                       w="100%"
                     >
-                      <HStack spacing={4} group>
+                      <HStack gap={4} group>
                         <Text
                           fontSize="xs"
                           fontWeight="bold"
@@ -203,8 +203,8 @@ const MobileNav = () => {
                   ))}
                 </VStack>
 
-                <VStack spacing={8} align="start" pt={10} borderTop="1px solid" borderColor="bg.muted">
-                  <VStack align="start" spacing={1}>
+                <VStack gap={8} align="start" pt={10} borderTop="1px solid" borderColor="bg.muted">
+                  <VStack align="start" gap={1}>
                     <Text fontSize="xs" fontWeight="bold" color="fg.subtle" letterSpacing="widest" textTransform="uppercase">
                       Quality Guaranteed
                     </Text>
@@ -213,8 +213,8 @@ const MobileNav = () => {
                     </Text>
                   </VStack>
 
-                  <HStack spacing={6} w="100%" justify="space-between" align="center">
-                    <HStack spacing={4}>
+                  <HStack gap={6} w="100%" justify="space-between" align="center">
+                    <HStack gap={4}>
                       {/* Placeholder for social or other links */}
                     </HStack>
                     <ColorModeButton />

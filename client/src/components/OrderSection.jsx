@@ -1,9 +1,11 @@
-import { useState } from 'react'
-import { Box, Container, Heading, VStack, HStack, Text, Input, Button, Flex, Textarea, Stack } from '@chakra-ui/react'
+import { useState, useId } from 'react'
+import { Box, Container, Heading, VStack, HStack, Text, Input, Button, Flex, Textarea, Stack, Field } from '@chakra-ui/react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { submitOrderForm } from '../utils/orderService'
 import { TbTruck } from 'react-icons/tb'
+import { toaster } from './ui/toaster'
+import { hasValidPhoneDigits } from '../utils/phone'
 
 const OrderSection = () => {
   const [formData, setFormData] = useState({
@@ -12,13 +14,21 @@ const OrderSection = () => {
     deliveryAddress: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  // react-phone-input-2 manages its own <input> id, ignoring Field.Root's auto-generated one,
+  // so the label needs an explicit id passed straight into the phone input to actually link up.
+  const phoneFieldId = useId()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     // Validate: all fields are required
-    if (!formData.name || !formData.phone || !formData.deliveryAddress) {
-      alert('Please fill in all fields: Name, Phone Number, and Delivery Address')
+    if (!formData.name || !hasValidPhoneDigits(formData.phone) || !formData.deliveryAddress) {
+      toaster.create({
+        title: 'Missing information',
+        description: 'Please fill in your name, a valid phone number, and delivery address.',
+        type: 'warning',
+        duration: 4000,
+      })
       return
     }
 
@@ -32,7 +42,12 @@ const OrderSection = () => {
         source: 'order-form'
       })
 
-      alert('Order submitted successfully! We have received your order. We will contact you shortly to confirm.')
+      toaster.create({
+        title: 'Order submitted!',
+        description: 'We have received your order. We will contact you shortly to confirm.',
+        type: 'success',
+        duration: 5000,
+      })
 
       // Reset form
       setFormData({
@@ -45,11 +60,14 @@ const OrderSection = () => {
       const errorMessage = error.text || error.message || 'Please try again later.'
       const isRecipientError = errorMessage.includes('recipients address is empty') || errorMessage.includes('recipient')
 
-      const alertMessage = isRecipientError
-        ? 'Email Configuration Error: Please configure recipient emails in your EmailJS template settings (To Email field).'
-        : `Error submitting order: ${errorMessage}`
-
-      alert(alertMessage)
+      toaster.create({
+        title: isRecipientError ? 'Email configuration error' : 'Order submission failed',
+        description: isRecipientError
+          ? 'Please configure recipient emails in your EmailJS template settings (To Email field).'
+          : errorMessage,
+        type: 'error',
+        duration: 6000,
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -66,7 +84,7 @@ const OrderSection = () => {
     <Box as="section" py={{ base: 16, md: 24 }} bg="bg" id="order">
       <Container maxW="1200px" px={6} mx="auto">
         <Stack direction={{ base: 'column', md: 'row' }} gap={16} align="center">
-          <VStack align={{ base: 'center', md: 'flex-start' }} flex="1" spacing={6}>
+          <VStack align={{ base: 'center', md: 'flex-start' }} flex="1" gap={6}>
             <Text
               fontSize="sm"
               fontWeight="extrabold"
@@ -76,27 +94,27 @@ const OrderSection = () => {
             >
               Order Now
             </Text>
-            <Heading size="3xl" color="fg" textAlign={{ base: 'center', md: 'left' }}>
+            <Heading as="h2" size="3xl" color="fg" textAlign={{ base: 'center', md: 'left' }}>
               Bring Natural <Text as="span" color="brandOrange">Wellness</Text> To Your Door
             </Heading>
             <Text fontSize="lg" color="fg.muted" textAlign={{ base: 'center', md: 'left' }}>
               Join thousands of satisfied customers. Fill in your details below and our team will reach out to confirm your order and delivery details.
             </Text>
 
-            <VStack align="stretch" w="100%" spacing={4}>
-              <HStack spacing={4}>
+            <VStack align="stretch" w="100%" gap={4}>
+              <HStack gap={4}>
                 <Box bg="brandOrange/10" p={2} borderRadius="md">
                   <Text color="brandOrange" fontWeight="bold">✓</Text>
                 </Box>
                 <Text color="fg.muted">Free Delivery Across Kenya</Text>
               </HStack>
-              <HStack spacing={4}>
+              <HStack gap={4}>
                 <Box bg="brandOrange/10" p={2} borderRadius="md">
                   <Text color="brandOrange" fontWeight="bold">✓</Text>
                 </Box>
                 <Text color="fg.muted">Secure Cash on Delivery</Text>
               </HStack>
-              <HStack spacing={4}>
+              <HStack gap={4}>
                 <Box bg="brandOrange/10" p={2} borderRadius="md">
                   <Text color="brandOrange" fontWeight="bold">✓</Text>
                 </Box>
@@ -115,9 +133,9 @@ const OrderSection = () => {
               borderColor="bg.muted"
             >
               <form onSubmit={handleSubmit}>
-                <VStack spacing={6}>
-                  <Box w="100%">
-                    <Text fontWeight="bold" mb="2" fontSize="sm" color="fg">FULL NAME</Text>
+                <VStack gap={6}>
+                  <Field.Root w="100%">
+                    <Field.Label fontWeight="bold" mb="2" fontSize="sm" color="fg">FULL NAME</Field.Label>
                     <Input
                       name="name"
                       placeholder="Your name"
@@ -131,52 +149,23 @@ const OrderSection = () => {
                       borderColor="bg.muted"
                       _focus={{ borderColor: 'brandOrange', boxShadow: '0 0 0 1px brandOrange' }}
                     />
-                  </Box>
+                  </Field.Root>
 
-                  <Box w="100%">
-                    <Text fontWeight="bold" mb="2" fontSize="sm" color="fg">PHONE NUMBER</Text>
-                    <Box
-                      className="phone-input-wrapper"
-                      sx={{
-                        '& .react-tel-input': {
-                          width: '100% !important',
-                        },
-                        '& .form-control': {
-                          width: '100% !important',
-                          height: '48px !important',
-                          fontSize: '16px !important',
-                          borderRadius: '12px !important',
-                          border: '1px solid {colors.bg.muted} !important',
-                          backgroundColor: 'bg !important',
-                          color: 'fg !important',
-                        },
-                        '& .form-control:focus': {
-                          borderColor: 'brandOrange !important',
-                          boxShadow: '0 0 0 1px brandOrange !important',
-                          outline: 'none !important'
-                        },
-                        '& .flag-dropdown': {
-                          borderRadius: '12px 0 0 12px !important',
-                          borderRight: '1px solid {colors.bg.muted} !important',
-                          backgroundColor: 'bg.muted !important'
-                        },
-                        '& .selected-flag': {
-                          backgroundColor: 'transparent !important'
-                        }
-                      }}
-                    >
+                  <Field.Root w="100%">
+                    <Field.Label htmlFor={phoneFieldId} fontWeight="bold" mb="2" fontSize="sm" color="fg">PHONE NUMBER</Field.Label>
+                    <Box className="phone-input-wrapper" w="100%">
                       <PhoneInput
                         country={'ke'}
                         value={formData.phone}
                         onChange={(value) => setFormData({ ...formData, phone: value })}
-                        inputProps={{ name: 'phone', required: true }}
+                        inputProps={{ name: 'phone', required: true, id: phoneFieldId }}
                         placeholder="Phone number"
                       />
                     </Box>
-                  </Box>
+                  </Field.Root>
 
-                  <Box w="100%">
-                    <Text fontWeight="bold" mb="2" fontSize="sm" color="fg">DELIVERY ADDRESS</Text>
+                  <Field.Root w="100%">
+                    <Field.Label fontWeight="bold" mb="2" fontSize="sm" color="fg">DELIVERY ADDRESS</Field.Label>
                     <Textarea
                       name="deliveryAddress"
                       placeholder="Street, City, Area, etc."
@@ -191,9 +180,9 @@ const OrderSection = () => {
                       borderColor="bg.muted"
                       _focus={{ borderColor: 'brandOrange', boxShadow: '0 0 0 1px brandOrange' }}
                     />
-                  </Box>
+                  </Field.Root>
 
-                  <VStack spacing={4} w="100%">
+                  <VStack gap={4} w="100%">
                     <Button
                       type="submit"
                       bgGradient="to-r, brandOrange, #ff8a45"
@@ -203,7 +192,7 @@ const OrderSection = () => {
                       fontWeight="bold"
                       borderRadius="full"
                       boxShadow="0 8px 16px rgba(255, 107, 53, 0.3)"
-                      isLoading={isSubmitting}
+                      loading={isSubmitting}
                       loadingText="Processing..."
                       _hover={{
                         bgGradient: 'to-r, #ff8a45, brandOrange',

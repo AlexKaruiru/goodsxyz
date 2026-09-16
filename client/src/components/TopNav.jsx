@@ -151,7 +151,7 @@ const TopNav = ({ onSearch }) => {
           </Box>
 
           {/* Navigation Menu */}
-          <HStack spacing={10} flex="1" justify="center">
+          <HStack gap={10} flex="1" justify="center">
             {menuItems.map((item, index) => (
               <Box
                 key={index}
@@ -189,7 +189,7 @@ const TopNav = ({ onSearch }) => {
           </HStack>
 
           {/* Search Bar & Actions */}
-          <HStack spacing={4} flexShrink={0}>
+          <HStack gap={4} flexShrink={0}>
             <Box minW="200px">
               <Input
                 placeholder="Search products..."
