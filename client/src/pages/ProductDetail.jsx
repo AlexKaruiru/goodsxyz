@@ -145,7 +145,7 @@ const ProductDetail = () => {
                   <Badge colorPalette="orange" variant="subtle" mb={4} p={2} borderRadius="md" fontWeight="bold">
                     TRUSTED WELLNESS
                   </Badge>
-                  <Heading as="h1" size="4xl" color="fg" mb={6} lineHeight="tight">
+                  <Heading as="h1" size="3xl" color="fg" mb={6} lineHeight="tight">
                     {product.name}
                   </Heading>
                   <Text fontSize="xl" color="fg.muted" lineHeight="tall">
@@ -159,8 +159,8 @@ const ProductDetail = () => {
                       <VStack align="start" gap={1}>
                         <Text fontSize="sm" color="fg.subtle" fontWeight="bold" letterSpacing="widest">PRICE</Text>
                         <Stack direction={{ base: 'column', sm: 'row' }} align={{ base: 'start', sm: 'baseline' }} gap={{ base: 2, sm: 4 }}>
-                          <Text fontSize={{ base: "4xl", md: "5xl" }} fontWeight="900" color="brandOrange" lineHeight="1">
-                            {product.price.toLocaleString()} <Text as="span" fontSize={{ base: "xl", md: "2xl" }}>KES</Text>
+                          <Text fontSize="3xl" fontWeight="900" color="brandOrange" lineHeight="1">
+                            {product.price.toLocaleString()} <Text as="span" fontSize="xl">KES</Text>
                           </Text>
                           <Text fontSize={{ base: "lg", md: "xl" }} color="fg.subtle" textDecoration="line-through">
                             {product.originalPrice.toLocaleString()} KES

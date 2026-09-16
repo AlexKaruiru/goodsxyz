@@ -153,7 +153,7 @@ const MobileNav = () => {
           <Drawer.Content bg="bg/95" backdropFilter="blur(30px)">
             <Drawer.Header borderBottom="1px solid" borderColor="bg.muted" py={6} px={6}>
               <HStack justify="space-between" align="center">
-                <Text fontSize="2xl" fontWeight="900" color="brandOrange" letterSpacing="tight">
+                <Text fontSize="3xl" fontWeight="900" color="brandOrange" letterSpacing="tight">
                   SupleeHub
                 </Text>
                 <Drawer.CloseTrigger asChild>
@@ -188,7 +188,7 @@ const MobileNav = () => {
                           0{index + 1}
                         </Text>
                         <Text
-                          fontSize="4xl"
+                          fontSize="2xl"
                           fontWeight="900"
                           color="fg"
                           transition="all 0.3s"

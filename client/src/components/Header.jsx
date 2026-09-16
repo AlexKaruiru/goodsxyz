@@ -63,7 +63,7 @@ const Header = () => {
 
             <MotionHeading
               as="h1"
-              size={{ base: "4xl", md: "6xl" }}
+              size="3xl"
               fontWeight="900"
               lineHeight="1.1"
               color="fg"
