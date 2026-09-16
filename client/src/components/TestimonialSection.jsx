@@ -44,7 +44,7 @@ const TestimonialSection = () => {
             <Text
               fontSize="sm"
               fontWeight="extrabold"
-              color="brandOrange"
+              color="brandOrangeCta"
               letterSpacing="widest"
               textTransform="uppercase"
             >

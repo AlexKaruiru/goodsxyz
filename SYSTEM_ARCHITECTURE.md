@@ -280,6 +280,21 @@ Ordered by severity.
    effectively lost with no way to recover or audit it. This is a product/ops risk worth naming
    even though it's arguably "working as designed" for the current scale.
 
+### Accessibility
+
+8. ~~**The primary brand color fails WCAG AA contrast against white.**~~ — **Fully resolved
+   2026-09-16, see §11 Sessions 7–9.** `brandOrange` (`#FF6B35`, 2.84:1 on white) still exists in
+   the codebase, but only for what's actually exempt or non-textual: the "SupleeHub" logotype
+   (WCAG explicitly exempts logo/brand-name text from contrast requirements) and decorative icon
+   glyphs (checkmark/spinner icons, not text). **Every piece of text on the site that conveys
+   information — CTA buttons, eyebrow labels, heading highlights, prices, checkmark labels, the
+   search-results line, and inline emphasis spans — now uses `brandOrangeCta` (`#C74A1A` light /
+   unchanged `#FF8559` dark), which passes at 4.75:1.** Full detail: [§11 Session 6](#11-ui-modernization-progress)
+   (the finding), [§11 Session 7](#11-ui-modernization-progress) (CTA buttons),
+   [§11 Session 8](#11-ui-modernization-progress) (eyebrows + headings),
+   [§11 Session 9](#11-ui-modernization-progress) (everything else — prices, checkmarks, inline
+   spans).
+
 ---
 
 ## 10. Recommended Improvements
@@ -298,6 +313,9 @@ Ordered by severity.
    silently do less than the docs promise.
 6. **Consider persisting orders somewhere** (even a simple append-only log or spreadsheet
    integration) so an order isn't purely a fire-and-forget email.
+7. ~~**Decide how to remediate the brand-orange contrast failure**~~ — **fully done** (§9.8, §11
+   Sessions 7–9). Every text instance of `brandOrange` that isn't the logotype or a decorative
+   icon glyph has been converted to `brandOrangeCta`. Nothing left to decide here.
 
 ---
 
@@ -418,16 +436,50 @@ surfaced a real, previously-unnoticed crash:
   added one. Confirmed the other icon-only controls were already covered (`ColorModeButton`,
   `FooterInfoDialog`'s close button, and `QuickOrderModal`'s `CloseButton` — Chakra's
   `CloseButton` ships a built-in `aria-label="Close"` by default).
-- **Found, flagged, not changed — a decision, not a bug fix**: computed exact WCAG contrast
-  ratios (not eyeballed) for the primary brand color. `brandOrange` (`#FF6B35`) on white is
-  **2.84:1** — fails AA for both normal text (needs 4.5:1) and large/bold text (needs 3:1). This
-  is used site-wide (every eyebrow label, highlighted heading words) and, critically, **white
-  button text on orange buttons uses the identical 2.84:1 ratio** — the primary "ORDER NOW"/
-  "PLACE ORDER" CTAs fail contrast too. Dark mode is fine (7.44:1, the dark-mode orange variant
-  is lighter against a much darker background). Not changed: a real fix means visibly darkening
-  the brand orange or introducing a separate text-safe shade, and introducing new palette colors
-  was explicitly ruled out earlier in this effort — surfaced as a quantified decision for later
-  rather than silently altering the brand color.
+- **Found, flagged, not changed — a decision, not a bug fix: brand-orange contrast fails WCAG AA.**
+
+  *What the number means.* WCAG contrast ratio compares the relative luminance of foreground vs.
+  background color — a standardized formula, not a subjective read. WCAG 2.1 Level AA requires
+  **4.5:1** for normal-size text and **3:1** for large text (≥24px regular, or ≥18.66px bold).
+  `brandOrange` (`#FF6B35`) on white computes to **2.84:1** — short of *both* thresholds, not a
+  borderline case. (Dark mode is fine: the dark-mode variant, `#FF8559` on the dark navy
+  background, hits 7.44:1.)
+
+  *Where it bites.* Every eyebrow label site-wide (14px bold — too small to qualify for even the
+  relaxed 3:1 threshold, so it needs the full 4.5:1 and misses badly), highlighted words inside
+  headings (30px after the `3xl` cap — large enough to only need 3:1, but 2.84 still falls short),
+  and — most importantly — **white CTA button text on orange buttons**, since that's the same two
+  colors with foreground/background swapped: "ORDER NOW" and "PLACE ORDER" fail the identical
+  check. That's the button that drives revenue.
+
+  *Why it's not just fixed silently.* A real remediation darkens the brand orange or introduces a
+  second, text-safe shade — either way it visibly changes brand color, and introducing new palette
+  colors was explicitly ruled out earlier in this effort. Surfaced as a quantified decision rather
+  than silently altered.
+
+  *Remediation options, with effort estimates:*
+  1. **Scoped fix — only the CTA buttons (~20–30 min).** Darken the ~4–5 `Button` backgrounds (or
+     their `bgGradient` hex pairs) that render "ORDER NOW"/"PLACE ORDER", leave eyebrows/headings
+     as-is. Cheapest, lowest blast radius, fixes the highest-stakes failure. Tradeoff: two shades
+     of orange end up in play — a lighter brand accent and a darker action color — which can read
+     as intentional or as a mismatch depending on execution.
+  2. **Global token change (~30–45 min).** Darken `brandOrange`'s light-mode value once in
+     `main.jsx`. Four `bgGradient` buttons (`OrderSection.jsx`, `ProductSection.jsx`) hardcode a
+     companion shade (`#ff8a45`) that isn't tied to the token, so those need matching updates too,
+     plus a full visual re-check in both themes since every orange element on the site shifts —
+     eyebrows, badges, hover states, the whole accent. The biggest brand-feel change of the three.
+  3. **Two-tier system (~1–2 hours).** Keep the vibrant orange for large/decorative use, add a
+     separate darker "text-safe" token for small text specifically. Note: even the minimum
+     darkening needed to clear the 3:1 large-text bar still isn't enough for the 14px eyebrow
+     labels — those need the full 4.5:1 regardless, so this path doesn't avoid the real fix, it
+     only scopes where the vibrant orange survives. Requires auditing ~15–20 usage sites across
+     components to sort "text needing contrast" from "filled shapes where no text-contrast math
+     applies." Closest option to "introducing a new palette," which was explicitly ruled out —
+     a scope call as much as an effort one.
+
+  Not a real option: a text-shadow or outline behind the orange text — WCAG contrast is measured
+  on flat foreground/background color only, so that wouldn't count as remediation even if it
+  subjectively helped legibility.
 
 **Performance:**
 - Removed a **183KB dead image import** (`biotin.jpg`) that was bundled into the production build
@@ -454,6 +506,112 @@ surfaced a real, previously-unnoticed crash:
 - `og:url` and `og:image` currently point at a placeholder domain (`supleehub.example.com`) with
   a `TODO` comment in `index.html` — need the real production domain to finish these.
 
+**Session 7 (2026-09-16)** — Brand-orange contrast fix, scoped to CTA buttons
+
+Implemented the "scoped fix" option from Session 6's three-option writeup (§9.8, §10.7): a new
+semantic token, **`brandOrangeCta`** (`#C74A1A` light / `#FF8559` dark — dark mode was already
+compliant, so its value is unchanged), added in `main.jsx` next to `brandOrange`. White text on
+`#C74A1A` computes to **4.75:1**, clearing the 4.5:1 AA bar with margin.
+
+Applied to the six buttons whose job is to move a visitor toward ordering — the only elements
+this option was scoped to touch, deliberately leaving eyebrow labels and heading highlight words
+on the original (still-failing) `brandOrange`, per the plan:
+
+- `Header.jsx` — "Explore Products" (hero CTA)
+- `ProductSection.jsx` — "ORDER NOW" (product card)
+- `ProductDetail.jsx` — "ORDER NOW" (main product-page button)
+- `OrderSection.jsx` — "PLACE ORDER" (inline order form)
+- `QuickOrderModal.jsx` — "PLACE ORDER — {price} KES" (order dialog)
+- `WellnessQuiz.jsx` — "CLAIM DISCOUNT NOW" (end-of-quiz CTA)
+
+Two of these (`OrderSection`, `ProductSection`) previously used a `bgGradient` fading toward a
+second, lighter hardcoded hex (`#ff8a45`) for a shine effect. Kept as a gradient toward a lighter
+shade would have reintroduced a low-contrast region within the same button, so both were converted
+to a flat `bg="brandOrangeCta"` fill instead — this also brings them in line with the hover
+pattern the other four buttons already used (same background, lift + shadow on hover, no color
+swap), so all six now behave identically on hover.
+
+Deliberately **not** touched, matching the "scoped" plan exactly: the countdown timer's digit
+tiles, the "-50%/SAVE 50%" badges, the testimonial avatar circles, and the `TrustSection` icon
+boxes — all solid-`brandOrange`-with-white-content, same underlying contrast issue, but none of
+them are literal call-to-action buttons, so they were left out of this pass's scope on purpose.
+Also not touched: `FooterInfoDialog`'s "Got it" button — a dismiss action, not a conversion CTA.
+
+Verified live: computed `background-color` on all six buttons resolves to `rgb(199, 74, 26)`
+(`#C74A1A`); visually confirmed on four of the six (Header, ProductSection card, ProductDetail,
+QuickOrderModal) — reads as a deliberate, grounded "action" orange next to the lighter accent
+orange used elsewhere, not a mismatch. No console errors introduced.
+
+**Session 8 (2026-09-16)** — Brand-orange contrast fix, extended to eyebrow labels and headings
+
+Follow-up request: extend Session 7's fix from just the CTA buttons to every eyebrow label and
+heading highlight too. Reused the same `brandOrangeCta` token (no new color needed — the contrast
+formula is symmetric, so `#C74A1A` text on white is the identical 4.75:1 ratio as white text on
+`#C74A1A`, and its dark-mode value already matched `brandOrange`'s, so dark mode needed no change
+either). Swapped `color="brandOrange"` → `color="brandOrangeCta"` on 18 instances across 9 files:
+
+- **Every eyebrow label site-wide** (the small uppercase kicker text above each section heading):
+  `Header.jsx`, `ProductSection.jsx`, `AdvantagesSection.jsx`, `TestimonialSection.jsx`,
+  `TrustSection.jsx`, `OrderSection.jsx`, `WellnessQuiz.jsx` (both its section eyebrow and the
+  "QUESTION X OF Y" in-quiz kicker), `ProductDetail.jsx`'s "The Science" eyebrow, and
+  `FooterInfoDialog.jsx`'s per-dialog eyebrow (shared by all four footer dialogs).
+- **Every heading highlight span**: "Joints" (`Header.jsx` hero `h1`), "Wellness"
+  (`OrderSection.jsx`), "Order" (`TrustSection.jsx`), "Analysis" (`WellnessQuiz.jsx`).
+- **`ProductDetail.jsx`'s four fully-orange `h3` sub-headings** ("CARTILAGE REGENERATION...",
+  "REDUCTION OF INFLAMMATION...", "LUBRICATION...", "BONE STRENGTHENING...").
+
+Deliberately left on the original `brandOrange`, and why:
+- **The "SupleeHub" logotype** (`Footer.jsx`, both `MobileNav.jsx` instances) — WCAG explicitly
+  exempts text that's part of a logo/brand name from contrast requirements, so this one is a
+  genuine exemption, not an oversight.
+- **Decorative, non-text-critical uses**: icon colors (`TbCheck` in `ProductDetail.jsx`, the
+  advantage-card icon boxes, the `FooterInfoDialog` badge icon), the countdown timer's `:`
+  separators, the bullet dot and bare checkmark glyphs, the toast spinner.
+- **Price displays** (`ProductDetail.jsx`, `ProductSection.jsx`) and a **ghost-variant "View all
+  products" link button** — not eyebrows or headings by function, left for a possible future pass.
+- **A few inline body-copy emphasis spans** — `QuickOrderModal.jsx`'s "Ordering: {product name}"
+  and the quiz result copy's "SupleeHub" mention — styled as inline emphasis within a sentence,
+  not as a standalone eyebrow/heading, so out of this pass's literal scope.
+
+Verified live: computed `color` on the hero eyebrow and the "Joints" heading span both resolve to
+`rgb(199, 74, 26)` (light mode); toggling to dark mode resolves the same eyebrow to
+`rgb(255, 133, 89)` (`#FF8559`) — confirming zero visual change in dark mode, exactly as designed.
+No console errors introduced.
+
+**Session 9 (2026-09-16)** — Brand-orange contrast fix, final pass: everything but the logotype
+
+Follow-up request to finish off every remaining real (non-exempt, non-decorative) instance of the
+failing `brandOrange` identified at the end of Session 8. Same `brandOrangeCta` token, no new
+color — 11 more instances across 6 files:
+
+- **Prices**: `ProductDetail.jsx`'s and `ProductSection.jsx`'s price displays (e.g. "3,500 KES").
+- **The three "✓" checkmark labels** in `OrderSection.jsx` (Free Delivery / Cash on Delivery /
+  Satisfaction Guarantee) and the **"●" bullet** in `ProductSection.jsx`'s benefit list — these
+  are styled text glyphs (`<Text>`/`<Box as="span">`), not icon components, so unlike the
+  `TbCheck` SVG icons they don't get a decorative-icon exemption.
+- **The countdown timer's two `:` separators** (`CountdownTimer.jsx`).
+- **The "View all products" ghost-button link** (`ProductSection.jsx`'s empty search-results
+  state) and the **"Showing results for {query}" line** (also `ProductSection.jsx` — found during
+  this pass, wasn't in the original list handed off from Session 8's summary).
+- **Two inline body-copy emphasis spans**: `QuickOrderModal.jsx`'s "Ordering: {product name}" and
+  the quiz result paragraph's "SupleeHub" mention (`WellnessQuiz.jsx`) — on reflection, WCAG's
+  logotype exemption covers stylized brand marks, not every casual mention of the brand name in a
+  sentence, so this one doesn't get the same pass the Footer/MobileNav logotype does.
+
+**Deliberately still untouched** (genuine exemptions/non-text, not gaps): the "SupleeHub"
+logotype (`Footer.jsx`, both `MobileNav.jsx` spots — real WCAG logo exemption), the `TbCheck`
+icon SVGs (`ProductDetail.jsx`, `AdvantagesSection.jsx`, `FooterInfoDialog.jsx`) and the toast
+spinner — icon graphics, not text, so SC 1.4.3 doesn't apply the same way, and `MobileNav.jsx`'s
+"01/02/03" nav-item index numbers, which are decorative rather than informational.
+
+Verified live: the three checkmarks resolve to `rgb(199, 74, 26)` in light mode and
+`rgb(255, 133, 89)` in dark mode (matching the pre-existing dark-mode value exactly, confirming
+zero dark-mode regression, same as every prior session in this fix). No console errors.
+
+**With this, the brand-orange WCAG AA contrast finding (§9.8) is fully resolved**: every text
+element that conveys information passes 4.5:1; what remains on the original color is limited to a
+genuine logo exemption and non-text icon graphics.
+
 ---
 
 ## 12. Document History
@@ -462,3 +620,14 @@ surfaced a real, previously-unnoticed crash:
   above. Covers the full `client/` and `server/` trees as they stood at that point.
 - **2026-09-16 (update)**: Added Sessions 5–6 (toast crash fix + bug sweep; accessibility,
   performance, and SEO basics).
+- **2026-09-16 (update)**: Expanded the brand-orange WCAG contrast finding (§9.8, §10.7, §11
+  Session 6) with the full explanation and per-option effort estimates, at the user's request.
+- **2026-09-16 (update)**: Added Session 7 — implemented the scoped CTA-button contrast fix from
+  Session 6's options; updated §9.8 and §10.7 to reflect it as done.
+- **2026-09-16 (update)**: Added Session 8 — extended the contrast fix to every eyebrow label and
+  heading highlight; updated §9.8 and §10.7 to mark the whole finding resolved except the
+  WCAG-exempt logotype and a few low-traffic inline emphasis spans.
+- **2026-09-16 (update)**: Added Session 9 — finished off the remaining instances (prices,
+  checkmark labels, bullet, search-results line, inline emphasis spans); updated §9.8 and §10.7 to
+  mark the brand-orange contrast finding fully resolved, with only the WCAG-exempt logotype and
+  non-text icon graphics left on the original color.

@@ -110,7 +110,7 @@ const ProductSection = ({ searchQuery = '' }) => {
           <VStack gap={1} align="center">
             {(product.benefits?.length ? product.benefits : fallbackBenefits).slice(0, 3).map((benefit, index) => (
               <Flex key={index} align="center">
-                <Box as="span" mr="2" color="brandOrange" fontSize="sm">●</Box>
+                <Box as="span" mr="2" color="brandOrangeCta" fontSize="sm">●</Box>
                 <Text fontSize="xs" color="fg.muted" noOfLines={1}>{benefit}</Text>
               </Flex>
             ))}
@@ -119,7 +119,7 @@ const ProductSection = ({ searchQuery = '' }) => {
 
         <Box py={3} borderTop="1px solid" borderColor="bg.muted" mt="auto">
           <Stack direction="row" align="baseline" justify="center" gap={2} mb={4}>
-            <Text fontSize="2xl" fontWeight="900" color="brandOrange">
+            <Text fontSize="2xl" fontWeight="900" color="brandOrangeCta">
               {product.price.toLocaleString()} KES
             </Text>
             <Text fontSize="sm" color="fg.subtle" textDecoration="line-through">
@@ -128,7 +128,7 @@ const ProductSection = ({ searchQuery = '' }) => {
           </Stack>
 
           <Button
-            bgGradient="to-r, brandOrange, #ff8a45"
+            bg="brandOrangeCta"
             color="white"
             size="lg"
             w="100%"
@@ -140,7 +140,7 @@ const ProductSection = ({ searchQuery = '' }) => {
               setIsOrderModalOpen(true)
             }}
             _hover={{
-              bgGradient: 'to-r, #ff8a45, brandOrange',
+              bg: 'brandOrangeCta',
               transform: 'translateY(-3px)',
               boxShadow: '0 10px 25px rgba(255, 107, 53, 0.4)'
             }}
@@ -163,7 +163,7 @@ const ProductSection = ({ searchQuery = '' }) => {
               <Text
                 fontSize="sm"
                 fontWeight="extrabold"
-                color="brandOrange"
+                color="brandOrangeCta"
                 letterSpacing="widest"
                 textTransform="uppercase"
               >
@@ -182,7 +182,7 @@ const ProductSection = ({ searchQuery = '' }) => {
           {searchQuery && (
             <HStack bg="bg.subtle" p={4} borderRadius="xl" border="1px solid" borderColor="bg.muted">
               <Text color="fg.muted">
-                Showing results for <Text as="span" fontWeight="bold" color="brandOrange">"{searchQuery}"</Text>
+                Showing results for <Text as="span" fontWeight="bold" color="brandOrangeCta">"{searchQuery}"</Text>
                 <Text as="span" ml={2} color="fg.subtle">({products.length} products found)</Text>
               </Text>
             </HStack>
@@ -205,7 +205,7 @@ const ProductSection = ({ searchQuery = '' }) => {
               <Text fontSize="xl" color="fg.muted">No products found matching your search.</Text>
               <Button
                 variant="ghost"
-                color="brandOrange"
+                color="brandOrangeCta"
                 onClick={() => window.location.reload()}
               >
                 View all products

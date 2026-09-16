@@ -159,7 +159,7 @@ const ProductDetail = () => {
                       <VStack align="start" gap={1}>
                         <Text fontSize="sm" color="fg.subtle" fontWeight="bold" letterSpacing="widest">PRICE</Text>
                         <Stack direction={{ base: 'column', sm: 'row' }} align={{ base: 'start', sm: 'baseline' }} gap={{ base: 2, sm: 4 }}>
-                          <Text fontSize="3xl" fontWeight="900" color="brandOrange" lineHeight="1">
+                          <Text fontSize="3xl" fontWeight="900" color="brandOrangeCta" lineHeight="1">
                             {product.price.toLocaleString()} <Text as="span" fontSize="xl">KES</Text>
                           </Text>
                           <Text fontSize={{ base: "lg", md: "xl" }} color="fg.subtle" textDecoration="line-through">
@@ -173,7 +173,7 @@ const ProductDetail = () => {
                     </HStack>
 
                     <Button
-                      bg="brandOrange"
+                      bg="brandOrangeCta"
                       color="white"
                       size="xl"
                       w="100%"
@@ -184,7 +184,7 @@ const ProductDetail = () => {
                       boxShadow="0 12px 24px rgba(255, 107, 53, 0.3)"
                       onClick={() => setIsOrderModalOpen(true)}
                       _hover={{
-                        bg: 'brandOrange',
+                        bg: 'brandOrangeCta',
                         transform: 'translateY(-4px)',
                         boxShadow: '0 20px 40px rgba(255, 107, 53, 0.4)'
                       }}
@@ -217,7 +217,7 @@ const ProductDetail = () => {
                       <Text
                         fontSize="sm"
                         fontWeight="extrabold"
-                        color="brandOrange"
+                        color="brandOrangeCta"
                         letterSpacing="widest"
                         textTransform="uppercase"
                       >
@@ -233,7 +233,7 @@ const ProductDetail = () => {
 
                     <SimpleGrid columns={{ base: 1, md: 2 }} gap={8}>
                       <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
-                        <Heading as="h3" size="md" color="brandOrange" mb={3} fontWeight="900">
+                        <Heading as="h3" size="md" color="brandOrangeCta" mb={3} fontWeight="900">
                           CARTILAGE REGENERATION AND JOINT STRENGTHENING
                         </Heading>
                         <Text color="fg.muted">
@@ -242,7 +242,7 @@ const ProductDetail = () => {
                       </VStack>
 
                       <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
-                        <Heading as="h3" size="md" color="brandOrange" mb={3} fontWeight="900">
+                        <Heading as="h3" size="md" color="brandOrangeCta" mb={3} fontWeight="900">
                           REDUCTION OF INFLAMMATION AND PAIN
                         </Heading>
                         <Text color="fg.muted">
@@ -251,7 +251,7 @@ const ProductDetail = () => {
                       </VStack>
 
                       <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
-                        <Heading as="h3" size="md" color="brandOrange" mb={3} fontWeight="900">
+                        <Heading as="h3" size="md" color="brandOrangeCta" mb={3} fontWeight="900">
                           LUBRICATION AND PROTECTION AGAINST WEAR
                         </Heading>
                         <Text color="fg.muted">
@@ -260,7 +260,7 @@ const ProductDetail = () => {
                       </VStack>
 
                       <VStack align="start" p={6} bg="bg.subtle" borderRadius="2xl" border="1px solid" borderColor="bg.muted">
-                        <Heading as="h3" size="md" color="brandOrange" mb={3} fontWeight="900">
+                        <Heading as="h3" size="md" color="brandOrangeCta" mb={3} fontWeight="900">
                           BONE STRENGTHENING AND INJURY PREVENTION
                         </Heading>
                         <Text color="fg.muted">

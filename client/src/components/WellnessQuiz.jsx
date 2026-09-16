@@ -42,14 +42,14 @@ const WellnessQuiz = () => {
                         <Text
                             fontSize="sm"
                             fontWeight="extrabold"
-                            color="brandOrange"
+                            color="brandOrangeCta"
                             letterSpacing="widest"
                             textTransform="uppercase"
                         >
                             Diagnostic Survey
                         </Text>
                         <Heading as="h2" size="3xl" textAlign="center" color="fg">
-                            Quick Wellness <Text as="span" color="brandOrange">Analysis</Text>
+                            Quick Wellness <Text as="span" color="brandOrangeCta">Analysis</Text>
                         </Heading>
                         {!isFinished && (
                             <Text fontSize="lg" color="fg.muted" textAlign="center">
@@ -79,7 +79,7 @@ const WellnessQuiz = () => {
                                 >
                                     <VStack align="stretch" gap={8}>
                                         <HStack justify="space-between" align="center">
-                                            <Text fontWeight="bold" color="brandOrange" fontSize="sm">
+                                            <Text fontWeight="bold" color="brandOrangeCta" fontSize="sm">
                                                 QUESTION {step + 1} OF {questions.length}
                                             </Text>
                                             <Text fontWeight="bold" color="fg.subtle" fontSize="sm">
@@ -146,7 +146,7 @@ const WellnessQuiz = () => {
                                         <VStack gap={4} textAlign="center">
                                             <Heading as="h3" size="xl" color="fg">Analysis Complete</Heading>
                                             <Text fontSize="lg" color="fg.muted">
-                                                Based on your answers, an injury or bruise can happen anytime - and it's easy to fix them fast! We recommend joining thousands who use <Text as="span" fontWeight="bold" color="brandOrange">SupleeHub</Text> solutions.
+                                                Based on your answers, an injury or bruise can happen anytime - and it's easy to fix them fast! We recommend joining thousands who use <Text as="span" fontWeight="bold" color="brandOrangeCta">SupleeHub</Text> solutions.
                                             </Text>
                                             <Text color="fg.muted">
                                                 Our unique capacity to relieve pain and inflammation will give you comfort anytime. Longer use will help stimulate cartilaginous tissue regeneration.
@@ -154,7 +154,7 @@ const WellnessQuiz = () => {
                                         </VStack>
                                         <Button
                                             size="xl"
-                                            bg="brandOrange"
+                                            bg="brandOrangeCta"
                                             color="white"
                                             px={12}
                                             borderRadius="full"

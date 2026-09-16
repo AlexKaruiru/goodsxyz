@@ -88,14 +88,14 @@ const OrderSection = () => {
             <Text
               fontSize="sm"
               fontWeight="extrabold"
-              color="brandOrange"
+              color="brandOrangeCta"
               letterSpacing="widest"
               textTransform="uppercase"
             >
               Order Now
             </Text>
             <Heading as="h2" size="3xl" color="fg" textAlign={{ base: 'center', md: 'left' }}>
-              Bring Natural <Text as="span" color="brandOrange">Wellness</Text> To Your Door
+              Bring Natural <Text as="span" color="brandOrangeCta">Wellness</Text> To Your Door
             </Heading>
             <Text fontSize="lg" color="fg.muted" textAlign={{ base: 'center', md: 'left' }}>
               Join thousands of satisfied customers. Fill in your details below and our team will reach out to confirm your order and delivery details.
@@ -104,19 +104,19 @@ const OrderSection = () => {
             <VStack align="stretch" w="100%" gap={4}>
               <HStack gap={4}>
                 <Box bg="brandOrange/10" p={2} borderRadius="md">
-                  <Text color="brandOrange" fontWeight="bold">✓</Text>
+                  <Text color="brandOrangeCta" fontWeight="bold">✓</Text>
                 </Box>
                 <Text color="fg.muted">Free Delivery Across Kenya</Text>
               </HStack>
               <HStack gap={4}>
                 <Box bg="brandOrange/10" p={2} borderRadius="md">
-                  <Text color="brandOrange" fontWeight="bold">✓</Text>
+                  <Text color="brandOrangeCta" fontWeight="bold">✓</Text>
                 </Box>
                 <Text color="fg.muted">Secure Cash on Delivery</Text>
               </HStack>
               <HStack gap={4}>
                 <Box bg="brandOrange/10" p={2} borderRadius="md">
-                  <Text color="brandOrange" fontWeight="bold">✓</Text>
+                  <Text color="brandOrangeCta" fontWeight="bold">✓</Text>
                 </Box>
                 <Text color="fg.muted">100% Satisfaction Guarantee</Text>
               </HStack>
@@ -185,7 +185,7 @@ const OrderSection = () => {
                   <VStack gap={4} w="100%">
                     <Button
                       type="submit"
-                      bgGradient="to-r, brandOrange, #ff8a45"
+                      bg="brandOrangeCta"
                       color="white"
                       size="xl"
                       w="100%"
@@ -195,7 +195,7 @@ const OrderSection = () => {
                       loading={isSubmitting}
                       loadingText="Processing..."
                       _hover={{
-                        bgGradient: 'to-r, #ff8a45, brandOrange',
+                        bg: 'brandOrangeCta',
                         transform: 'translateY(-3px)',
                         boxShadow: '0 12px 28px rgba(255, 107, 53, 0.5)'
                       }}

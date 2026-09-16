@@ -61,9 +61,9 @@ const CountdownTimer = () => {
       </Text>
       <HStack gap={3}>
         <TimeUnit value={hours} label="Hrs" />
-        <Text fontSize="2xl" fontWeight="900" color="brandOrange">:</Text>
+        <Text fontSize="2xl" fontWeight="900" color="brandOrangeCta">:</Text>
         <TimeUnit value={minutes} label="Min" />
-        <Text fontSize="2xl" fontWeight="900" color="brandOrange">:</Text>
+        <Text fontSize="2xl" fontWeight="900" color="brandOrangeCta">:</Text>
         <TimeUnit value={seconds} label="Sec" />
       </HStack>
     </HStack>

@@ -53,7 +53,7 @@ const Header = () => {
               <Text
                 fontSize="sm"
                 fontWeight="extrabold"
-                color="brandOrange"
+                color="brandOrangeCta"
                 letterSpacing="widest"
                 textTransform="uppercase"
               >
@@ -72,7 +72,7 @@ const Header = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Painful  <Text as="span" color="brandOrange">Joints</Text> or Back?
+              Painful  <Text as="span" color="brandOrangeCta">Joints</Text> or Back?
             </MotionHeading>
 
             <MotionText
@@ -94,7 +94,7 @@ const Header = () => {
             >
               <Button
                 size="xl"
-                bg="brandOrange"
+                bg="brandOrangeCta"
                 color="white"
                 px={10}
                 borderRadius="full"
@@ -102,7 +102,7 @@ const Header = () => {
                 fontWeight="bold"
                 boxShadow="0 10px 20px rgba(255, 107, 53, 0.3)"
                 _hover={{
-                  bg: 'brandOrange',
+                  bg: 'brandOrangeCta',
                   transform: 'translateY(-2px)',
                   boxShadow: '0 15px 30px rgba(255, 107, 53, 0.4)'
                 }}

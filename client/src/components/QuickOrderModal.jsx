@@ -103,7 +103,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
                   Quick Order
                 </Dialog.Title>
                 <Text color="fg.muted" fontSize="sm">
-                  Ordering: <Text as="span" color="brandOrange" fontWeight="bold">{product?.name}</Text>
+                  Ordering: <Text as="span" color="brandOrangeCta" fontWeight="bold">{product?.name}</Text>
                 </Text>
               </VStack>
               <Dialog.CloseTrigger asChild>
@@ -168,7 +168,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
                 <Button
                   type="submit"
                   form="quick-order-form"
-                  bg="brandOrange"
+                  bg="brandOrangeCta"
                   color="white"
                   w="100%"
                   size="xl"
@@ -178,7 +178,7 @@ const QuickOrderModal = ({ isOpen, onClose, product }) => {
                   loading={isSubmitting}
                   loadingText="Processing..."
                   _hover={{
-                    bg: 'brandOrange',
+                    bg: 'brandOrangeCta',
                     transform: 'translateY(-2px)',
                     boxShadow: '0 12px 24px rgba(255, 107, 53, 0.4)'
                   }}

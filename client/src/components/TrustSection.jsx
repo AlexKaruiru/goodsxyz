@@ -35,14 +35,14 @@ const TrustSection = () => {
                             <Text
                                 fontSize="sm"
                                 fontWeight="extrabold"
-                                color="brandOrange"
+                                color="brandOrangeCta"
                                 letterSpacing="widest"
                                 textTransform="uppercase"
                             >
                                 The Process
                             </Text>
                             <Heading as="h2" size="3xl" textAlign="center" color="fg">
-                                How to Get Your <Text as="span" color="brandOrange">Order</Text>
+                                How to Get Your <Text as="span" color="brandOrangeCta">Order</Text>
                             </Heading>
                         </VStack>
 

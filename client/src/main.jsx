@@ -67,6 +67,10 @@ const customConfig = defineConfig({
         },
         brandRed: { value: { base: '#FF0000', _dark: '#FF4D4D' } },
         brandOrange: { value: { base: '#FF6B35', _dark: '#FF8559' } },
+        // WCAG AA-safe variant for white text on a solid/gradient fill (buttons) - brandOrange
+        // itself is only 2.84:1 against white with white text, which fails AA (needs 4.5:1).
+        // This hits ~4.75:1. Dark mode's brandOrange already passes (7.44:1), so it's unchanged.
+        brandOrangeCta: { value: { base: '#C74A1A', _dark: '#FF8559' } },
         brandPurple: { value: { base: '#6B46C1', _dark: '#9F7AEA' } },
         brandBlue: { value: { base: '#015CAF', _dark: '#3182CE' } },
         brandGreen: { value: { base: '#35870d', _dark: '#48BB78' } },

@@ -50,7 +50,7 @@ const FooterInfoDialog = ({ isOpen, onClose, icon: Icon, eyebrow = 'Info', conte
                     </Box>
                   )}
                   <Box>
-                    <Text fontSize="xs" fontWeight="extrabold" color="brandOrange" textTransform="uppercase" letterSpacing="widest">
+                    <Text fontSize="xs" fontWeight="extrabold" color="brandOrangeCta" textTransform="uppercase" letterSpacing="widest">
                       {eyebrow}
                     </Text>
                     <Dialog.Title fontFamily="heading" fontSize={{ base: 'lg', md: 'xl' }} fontWeight="900" color="fg">
