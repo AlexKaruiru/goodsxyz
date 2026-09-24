@@ -75,7 +75,7 @@ goodsxyz/
 ├── package.json              # root scripts: dev/build/preview — all just delegate into client/
 ├── reference.html            # the original static landing page this app was converted from
 ├── client/
-│   ├── index.html             # Google Fonts <link>, Meta Pixel script (two versions, one commented out)
+│   ├── index.html             # Google Fonts <link>, Meta Pixel script (three versions, two commented out)
 │   ├── vite.config.js         # dev server on :3000, proxies /api → :5000 (see §6 — never actually hit)
 │   └── src/
 │       ├── main.jsx            # Chakra theme/token setup, ChakraProvider + ColorModeProvider mount
@@ -213,7 +213,7 @@ decision worth making deliberately — see [Recommended Improvements](#10-recomm
 | Service | Where | What it does |
 |---|---|---|
 | **EmailJS** | `client/src/utils/orderService.js`, `client/src/utils/config.js` | The actual order-delivery mechanism (§5). Runs entirely client-side — the EmailJS public key, service ID, and template ID are visible in the shipped JS bundle (expected/by-design for EmailJS's model, not a bug). |
-| **Meta (Facebook) Pixel** | `client/index.html` | Ad-conversion tracking. Two versions present: an old pixel ID commented out, and the active one (`fbq('init', '1726168932402677')`, `fbq('track', 'PageView')`) firing on every page load. Now honestly disclosed in the new Privacy/Cookies dialogs (§11) — previously the site had dead links where this should have been disclosed. |
+| **Meta (Facebook) Pixel** | `client/index.html` | Ad-conversion tracking. Three versions present: two older pixel IDs commented out, and the active one (`fbq('init', '1370111427959554')`, `fbq('track', 'PageView')`) firing on every page load. Now honestly disclosed in the new Privacy/Cookies dialogs (§11) — previously the site had dead links where this should have been disclosed. |
 | **Google Fonts** | `client/index.html` | Inter (body) + Montserrat + DM Sans (heading candidates, §4.2) loaded via `<link>`. |
 
 ---
